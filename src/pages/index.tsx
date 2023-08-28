@@ -97,46 +97,50 @@ export default function Home() {
 					<InfinitySpin width='150' color='#ffff' />
 				</span>
 			) : (
-				<span className='w-full flex flex-col justify-center items-center gap-6'>
-					<section
-						className={`flex gap-4 w-4/5 snap-x snap-mandatory overflow-x-scroll ${
-							postContent.length === 1 && 'justify-center'
-						}`}>
-						{postContent.map((content: string, index: number) => (
-							<div
-								className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] bg-brand flex justify-between flex-col rounded-md p-4 snap-center instagram-${index}`}
-								key={index}>
-								{postContent.length !== 1 && (
-									<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
-										{index}
+				!(postContent.length === 0) && (
+					<span className='w-full flex flex-col justify-center items-center gap-6'>
+						<section
+							className={`flex gap-4 w-4/5 snap-x snap-mandatory overflow-x-scroll ${
+								postContent.length === 1 && 'justify-center'
+							}`}>
+							{postContent.map((content: string, index: number) => (
+								<div
+									className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] bg-brand flex justify-between flex-col rounded-md p-4 snap-center instagram-${index}`}
+									key={index}>
+									{postContent.length !== 1 && (
+										<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
+											{index}
+										</span>
+									)}
+									<span className={`text-lg h-[80%] flex items-center`}>
+										{content}
 									</span>
-								)}
-								<span className={`text-lg h-[80%] flex items-center`}>
-									{content}
-								</span>
-								<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>
-									{/* <img
+									<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>
+										{/* <img
 								src={extractImageUrl(postUser.avatar)}
 								alt={postUser.username}
 								className='h-6 w-6 rounded-full'
 							/> */}
-									<p className='text-fsm font-semibold'>@{postUser.username}</p>
+										<p className='text-fsm font-semibold'>
+											@{postUser.username}
+										</p>
+									</span>
+								</div>
+							))}
+						</section>
+						<button
+							className='bg-brand rounded-md h-16 p-4 font-medium w-60 flex items-center justify-center'
+							onClick={handleDownload}>
+							{downloadLoading ? (
+								<span className='flex items-center justify-center w-full'>
+									<InfinitySpin width='100' color='#ffff' />
 								</span>
-							</div>
-						))}
-					</section>
-					<button
-						className='bg-brand rounded-md h-16 p-4 font-medium w-60 flex items-center justify-center'
-						onClick={handleDownload}>
-						{downloadLoading ? (
-							<span className='flex items-center justify-center w-full'>
-								<InfinitySpin width='100' color='#ffff' />
-							</span>
-						) : (
-							<>Download</>
-						)}
-					</button>
-				</span>
+							) : (
+								<>Download</>
+							)}
+						</button>
+					</span>
+				)
 			)}
 		</section>
 	);
