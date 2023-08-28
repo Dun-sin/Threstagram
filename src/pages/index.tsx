@@ -71,7 +71,7 @@ export default function Home() {
 
 	return (
 		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-10 relative'>
-			<h1 className='text-flg font-bold'>
+			<h1 className='text-flg font-bold text-center'>
 				Convert Your Threads Post To Instagram Carousel
 			</h1>
 			<span className='w-4/5 flex items-center justify-center'>
