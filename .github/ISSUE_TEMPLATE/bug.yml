@@ -54,7 +54,7 @@ body:
     attributes:
       label: "🏢 Have you read the Contributing Guidelines?"
       options:
-        - label: "I have read and understood the rules in the [Contributing Guidelines](https://github.com/Dun-sin/Code-Magic/blob/main/CONTRIBUTING.md)"
+        - label: "I have read and understood the rules in the [Contributing Guidelines](https://github.com/Dun-sin/Threstagram/blob/main/CONTRIBUTING.md)"
           required: true
 
   - type: dropdown
