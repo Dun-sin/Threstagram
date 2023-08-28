@@ -74,7 +74,7 @@ export default function Home() {
 			<h1 className='text-flg font-bold text-center'>
 				Convert Your Threads Post To Instagram Carousel
 			</h1>
-			<span className='w-4/5 flex items-center justify-center'>
+			<span className='w-4/5 flex items-center justify-center max-w-[1100px]'>
 				<input
 					type='text'
 					placeholder='Threads Post URL'
@@ -93,12 +93,12 @@ export default function Home() {
 			</span>
 
 			{contentLoading ? (
-				<span className='flex items-center justify-center w-4/5'>
+				<span className='flex items-center justify-center w-4/5 max-w-[1100px]'>
 					<InfinitySpin width='150' color='#ffff' />
 				</span>
 			) : (
 				!(postContent.length === 0) && (
-					<span className='w-full flex flex-col justify-center items-center gap-6 h-auto'>
+					<span className='w-full flex flex-col justify-center items-center gap-6 h-auto max-w-[1100px]'>
 						<section
 							className={`flex gap-4 w-4/5 snap-x snap-mandatory overflow-x-scroll h-auto ${
 								postContent.length === 1 && 'justify-center'
