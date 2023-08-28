@@ -27,8 +27,6 @@ Before installation, please make sure you have already installed the following t
 - [NodeJs](https://nodejs.org/en/download/)
 
 ## 👌🏾 What you have to do to contribute
-
-- [Read the rules](https://github.com/Dun-sin/Threstagram/blob/main/CONTRIBUTING.md#rules)
 - [Follow the installation Steps](#%EF%B8%-installation-steps)
 - [Follow the contributing Steps](#-after-making-a-change)
 
