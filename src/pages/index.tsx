@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
+import ColorPicker from 'react-pick-color';
 
 import {
 	extractPostID,
@@ -8,15 +9,18 @@ import {
 	extractImageUrl,
 	elementToImage,
 } from '../utils/helper';
-
 import { getPostContent, getUserProfile } from '../utils/api';
 
 export default function Home() {
 	const [urlLoading, seturlLoading] = useState(false);
 	const [contentLoading, setContentLoading] = useState(false);
 	const [downloadLoading, setDownloadLoading] = useState(false);
+	const [isPickerOpen, setIsPickerOpen] = useState(false);
 
+	const [error, setError] = useState('');
 	const [postURL, setPostURL] = useState('');
+	const [color, setColor] = useState('#ff4847');
+
 	const [postContent, setPostContent] = useState([]);
 	const [postUser, setPostUser] = useState({
 		username: '',
@@ -42,7 +46,12 @@ export default function Home() {
 		const url = urlRef.current.value;
 		urlRef.current.value = '';
 
-		if (!(url.includes('threads.net') && url.includes('post'))) return;
+		if (!(url.includes('threads.net') && url.includes('post'))) {
+			setError('Invalid Link');
+			return;
+		}
+		setError('');
+
 		seturlLoading(true);
 		setPostURL(url);
 
@@ -70,27 +79,51 @@ export default function Home() {
 	};
 
 	return (
-		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-10 relative'>
+		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-10'>
 			<h1 className='text-flg font-bold text-center'>
 				Convert Your Threads Post To Instagram Carousel
 			</h1>
-			<span className='w-4/5 flex items-center justify-center max-w-[850px]'>
-				<input
-					type='text'
-					placeholder='Threads Post URL'
-					ref={urlRef}
-					className='h-12 w-[80%] rounded-tl-md rounded-bl-md outline-none border-2 focus:border-brand px-4 text-primary'
-				/>
-				{urlLoading ? (
-					<InfinitySpin width='50' color='#ffff' />
-				) : (
-					<button
-						onClick={handleOnClick}
-						className='bg-brand rounded-tr-md rounded-br-md h-12 px-6 font-medium w-[20%]'>
-						Submit
-					</button>
-				)}
-			</span>
+			<header className='w-full flex items-center justify-center flex-col relative'>
+				<span className='w-4/5 max-w-[850px]'>
+					<div className='flex items-center justify-center w-full'>
+						<input
+							type='text'
+							placeholder='Threads Post URL'
+							ref={urlRef}
+							className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
+						/>
+						{urlLoading ? (
+							<span className='w-[20%] bg-brand flex items-center justify-center h-12'>
+								<InfinitySpin width='50' color='#ffff' />
+							</span>
+						) : (
+							<button
+								onClick={handleOnClick}
+								className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%]'>
+								Submit
+							</button>
+						)}
+					</div>
+					<div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
+						<span className='flex gap-2 items-center'>
+							<p className='text-fxs'>Change Color: </p>
+							<div
+								className='h-8 w-8 rounded-md cursor-pointer'
+								style={{ backgroundColor: color }}
+								onClick={() => setIsPickerOpen(!isPickerOpen)}
+							/>
+							{isPickerOpen && (
+								<ColorPicker
+									color={color}
+									onChange={(color) => setColor(color.hex)}
+									className='absolute top-20 left-[30%]'
+								/>
+							)}
+						</span>
+					</div>
+				</span>
+				<p className='text-red-600 text-fsm text-center'>{error}</p>
+			</header>
 
 			{contentLoading ? (
 				<span className='flex items-center justify-center w-4/5 max-w-[850px]'>
@@ -98,15 +131,16 @@ export default function Home() {
 				</span>
 			) : (
 				!(postContent.length === 0) && (
-					<span className='w-full flex flex-col justify-center items-center gap-6 h-auto max-w-[850px]'>
+					<span className='w-4/5 flex flex-col justify-center items-center gap-6 h-auto max-w-[850px]'>
 						<section
-							className={`flex gap-4 w-4/5 snap-x snap-mandatory overflow-x-scroll h-auto ${
+							className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
 								postContent.length === 1 && 'justify-center'
 							}`}>
 							{postContent.map((content: string, index: number) => (
 								<div
-									className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] bg-brand flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
-									key={index}>
+									className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
+									key={index}
+									style={{ backgroundColor: color }}>
 									{postContent.length !== 1 && (
 										<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
 											{index}
