@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { InfinitySpin } from 'react-loader-spinner';
+import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
+import { InfinitySpin } from 'react-loader-spinner';
 
 import {
 	extractPostID,
@@ -79,7 +80,20 @@ export default function Home() {
 	};
 
 	return (
-		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-10'>
+		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-4 relative'>
+			<span className='flex gap-4 items-center absolute top-1 right-1'>
+				<p className='text-fsm underline underline-offset-2 flex gap-2 items-center cursor-pointer'>
+					<Icon icon='ri:github-fill' className='h-7 w-7' />
+					Github
+				</p>
+				<a
+					className='bg-yellow-400 px-5 py-3 flex gap-2 items-center rounded-md cursor-pointer'
+					href='https://www.buymeacoffee.com/dunsinCodes'
+					target='_blank'>
+					<Icon icon='ep:coffee' className='h-7 w-7' />
+					Buy Me A Coffee
+				</a>
+			</span>
 			<h1 className='text-flg font-bold text-center'>
 				Convert Your Threads Post To Instagram Carousel
 			</h1>
@@ -131,7 +145,7 @@ export default function Home() {
 				</span>
 			) : (
 				!(postContent.length === 0) && (
-					<span className='w-4/5 flex flex-col justify-center items-center gap-6 h-auto max-w-[850px]'>
+					<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
 						<section
 							className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
 								postContent.length === 1 && 'justify-center'
