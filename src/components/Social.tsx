@@ -3,10 +3,13 @@ import { Icon } from '@iconify/react';
 const Social = () => {
 	return (
 		<span className='flex gap-4 items-center absolute top-1 right-1'>
-			<p className='text-fsm underline underline-offset-2 flex gap-2 items-center cursor-pointer'>
+			<a
+				className='text-fsm underline underline-offset-2 flex gap-2 items-center cursor-pointer'
+				href='https://github.com/dun-sin/Threstagram'
+				target='_blank'>
 				<Icon icon='ri:github-fill' className='h-7 w-7' />
 				Github
-			</p>
+			</a>
 			<a
 				className='bg-yellow-400 px-5 py-3 flex gap-2 items-center rounded-md cursor-pointer'
 				href='https://www.buymeacoffee.com/dunsinCodes'
