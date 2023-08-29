@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // libraries
+import { NextSeo } from 'next-seo';
 import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
 
@@ -84,106 +85,124 @@ export default function Home() {
 	};
 
 	return (
-		<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-4 relative'>
-			<Social />
-			<h1 className='text-flg font-bold text-center'>
-				Convert Your Threads Post To Instagram Carousel
-			</h1>
-			{/* Input */}
-			<header className='w-full flex items-center justify-center flex-col relative'>
-				<span className='w-4/5 max-w-[850px]'>
-					<div className='flex items-center justify-center w-full'>
-						<input
-							type='text'
-							placeholder='Threads Post URL'
-							ref={urlRef}
-							className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
-						/>
-						{urlLoading ? (
-							<span className='w-[20%] bg-brand flex items-center justify-center h-12'>
-								<InfinitySpin width='50' color='#ffff' />
-							</span>
-						) : (
-							<button
-								onClick={handleOnClick}
-								className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%]'>
-								Submit
-							</button>
-						)}
-					</div>
-					<div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
-						<span className='flex gap-2 items-center'>
-							<p className='text-fxs'>Change Color: </p>
-							<div
-								className='h-8 w-8 rounded-md cursor-pointer'
-								style={{ backgroundColor: color }}
-								onClick={() => setIsPickerOpen(!isPickerOpen)}
+		<>
+			<NextSeo
+				openGraph={{
+					type: 'website',
+					url: 'https://threstagram.vercel.app',
+					title: 'Threstagram',
+					description: 'Convert Your Threads Posts to Images',
+					images: [
+						{
+							url: 'https://github-production-user-asset-6210df.s3.amazonaws.com/78784850/263960112-c1cb2dba-2379-4aa4-aba1-5ac124f7bcae.png',
+							alt: 'Threstagram Alt',
+							height: 600,
+							width: 800,
+						},
+					],
+				}}
+			/>
+			<section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-4 relative'>
+				<Social />
+				<h1 className='text-flg font-bold text-center'>
+					Convert Your Threads Post To Instagram Carousel
+				</h1>
+				{/* Input */}
+				<header className='w-full flex items-center justify-center flex-col relative'>
+					<span className='w-4/5 max-w-[850px]'>
+						<div className='flex items-center justify-center w-full'>
+							<input
+								type='text'
+								placeholder='Threads Post URL'
+								ref={urlRef}
+								className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
 							/>
-							{isPickerOpen && (
-								<ColorPicker
-									color={color}
-									onChange={(color) => setColor(color.hex)}
-									className='absolute top-20 left-[30%]'
-								/>
+							{urlLoading ? (
+								<span className='w-[20%] bg-brand flex items-center justify-center h-12'>
+									<InfinitySpin width='50' color='#ffff' />
+								</span>
+							) : (
+								<button
+									onClick={handleOnClick}
+									className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%]'>
+									Submit
+								</button>
 							)}
-						</span>
-					</div>
-				</span>
-				<p className='text-red-600 text-fsm text-center'>{error}</p>
-			</header>
-
-			{contentLoading ? (
-				<span className='flex items-center justify-center w-4/5 max-w-[850px]'>
-					<InfinitySpin width='150' color='#ffff' />
-				</span>
-			) : (
-				// Display Content
-				!(postContent.length === 0) && (
-					<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
-						<section
-							className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-								postContent.length === 1 && 'justify-center'
-							}`}>
-							{postContent.map((content: string, index: number) => (
+						</div>
+						<div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
+							<span className='flex gap-2 items-center'>
+								<p className='text-fxs'>Change Color: </p>
 								<div
-									className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
-									key={index}
-									style={{ backgroundColor: color }}>
-									{postContent.length !== 1 && (
-										<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
-											{index}
+									className='h-8 w-8 rounded-md cursor-pointer'
+									style={{ backgroundColor: color }}
+									onClick={() => setIsPickerOpen(!isPickerOpen)}
+								/>
+								{isPickerOpen && (
+									<ColorPicker
+										color={color}
+										onChange={(color) => setColor(color.hex)}
+										className='absolute top-20 left-[30%]'
+									/>
+								)}
+							</span>
+						</div>
+					</span>
+					<p className='text-red-600 text-fsm text-center'>{error}</p>
+				</header>
+
+				{contentLoading ? (
+					<span className='flex items-center justify-center w-4/5 max-w-[850px]'>
+						<InfinitySpin width='150' color='#ffff' />
+					</span>
+				) : (
+					// Display Content
+					!(postContent.length === 0) && (
+						<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
+							<section
+								className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
+									postContent.length === 1 && 'justify-center'
+								}`}>
+								{postContent.map((content: string, index: number) => (
+									<div
+										className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
+										key={index}
+										style={{ backgroundColor: color }}>
+										{postContent.length !== 1 && (
+											<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
+												{index}
+											</span>
+										)}
+										<span className={`text-lg h-[80%] flex items-center`}>
+											{content}
 										</span>
-									)}
-									<span className={`text-lg h-[80%] flex items-center`}>
-										{content}
-									</span>
-									<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>
-										{/* <img
+										<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>
+											{/* <img
 								src={extractImageUrl(postUser.avatar)}
 								alt={postUser.username}
 								className='h-6 w-6 rounded-full'
 							/> */}
-										<p className='text-fsm font-semibold'>
-											@{postUser.username}
-										</p>
+											<p className='text-fsm font-semibold'>
+												@{postUser.username}
+											</p>
+										</span>
+									</div>
+								))}
+							</section>
+							<button
+								className='bg-brand rounded-md h-16 p-4 font-medium w-60 flex items-center justify-center'
+								onClick={handleDownload}>
+								{downloadLoading ? (
+									<span className='flex items-center justify-center w-full'>
+										<InfinitySpin width='100' color='#ffff' />
 									</span>
-								</div>
-							))}
-						</section>
-						<button
-							className='bg-brand rounded-md h-16 p-4 font-medium w-60 flex items-center justify-center'
-							onClick={handleDownload}>
-							{downloadLoading ? (
-								<span className='flex items-center justify-center w-full'>
-									<InfinitySpin width='100' color='#ffff' />
-								</span>
-							) : (
-								<>Download</>
-							)}
-						</button>
-					</span>
-				)
-			)}
-		</section>
+								) : (
+									<>Download</>
+								)}
+							</button>
+						</span>
+					)
+				)}
+			</section>
+		</>
 	);
 }
