@@ -7,10 +7,6 @@
   </a>
 </div> <br>
 
-
-### 🚀 About
-#### Threstagram is a Threads Post To Instagram Carousel Converter
-
 ### ⚒️ Languages / Tools
 - Next.js
 - Tailwindcss
