@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
@@ -6,14 +6,38 @@ import { InfinitySpin } from 'react-loader-spinner';
 import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
 
-const Options = (props) => {
-	const { setPostURL, setPostUser, colorState } = props;
+type User = {
+	username: string;
+	avatar: string;
+};
+
+type optionsType = {
+	setPostURL: Dispatch<SetStateAction<string>>;
+	setPostUser: Dispatch<SetStateAction<User>>;
+	colorState: {
+		color: string;
+		setColor: Dispatch<SetStateAction<string>>;
+	};
+	postState: {
+		posts: any[];
+		setPostContent: Dispatch<SetStateAction<any[]>>;
+	};
+};
+
+const Options = (props: optionsType) => {
+	const { setPostURL, setPostUser, colorState, postState } = props;
 
 	const [urlLoading, seturlLoading] = useState(false);
 	const [isPickerOpen, setIsPickerOpen] = useState(false);
+
+	const [value, setValue] = useState(postState.posts.length);
 	const [error, setError] = useState('');
 
 	const urlRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		postState.setPostContent(postState.posts.slice(0, value));
+	}, [value]);
 
 	const handleOnClick = async () => {
 		if (urlRef.current === null) return;
@@ -35,6 +59,7 @@ const Options = (props) => {
 		setPostUser({ username, avatar });
 		seturlLoading(false);
 	};
+
 	return (
 		<header className='w-full flex items-center justify-center flex-col relative'>
 			<span className='w-4/5 max-w-[850px]'>
@@ -73,6 +98,26 @@ const Options = (props) => {
 							/>
 						)}
 					</span>
+
+					<span className='flex gap-2 items-center'>
+						{postState.posts.length !== 0 && (
+							<>
+								<p>Number of Threads: </p>
+								<div>
+									<select
+										className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
+										defaultValue={postState.posts.length}
+										onChange={(event) => setValue(Number(event.target.value))}>
+										{numbers(postState.posts.length).map((value) => (
+											<option value={value} key={value}>
+												{value}
+											</option>
+										))}
+									</select>
+								</div>
+							</>
+						)}
+					</span>
 				</div>
 			</span>
 			<p className='text-red-600 text-fsm text-center'>{error}</p>
@@ -81,3 +126,12 @@ const Options = (props) => {
 };
 
 export default Options;
+
+function numbers(postNumber: number) {
+	const number = [];
+	for (let index = 1; index < postNumber + 1; index++) {
+		number.push(index);
+	}
+
+	return number;
+}

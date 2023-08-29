@@ -22,7 +22,7 @@ export default function Home() {
 	const [contentLoading, setContentLoading] = useState(false);
 
 	const [postURL, setPostURL] = useState('');
-	const [color, setColor] = useState('#ff4847');
+	const [color, setColor] = useState<string>('#ff4847');
 
 	const [postContent, setPostContent] = useState([]);
 	const [postUser, setPostUser] = useState<User>({
@@ -70,6 +70,7 @@ export default function Home() {
 					setPostURL={setPostURL}
 					setPostUser={setPostUser}
 					colorState={{ color, setColor }}
+					postState={{ posts: postContent, setPostContent }}
 				/>
 
 				{contentLoading ? (
