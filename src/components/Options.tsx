@@ -2,6 +2,8 @@ import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
+import FontPicker from 'react-fontpicker-ts';
+import 'react-fontpicker-ts/dist/index.css';
 
 import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
@@ -14,6 +16,7 @@ type User = {
 type optionsType = {
 	setPostURL: Dispatch<SetStateAction<string>>;
 	setPostUser: Dispatch<SetStateAction<User>>;
+	setFontFamily: Dispatch<SetStateAction<string>>;
 	colorState: {
 		color: string;
 		setColor: Dispatch<SetStateAction<string>>;
@@ -25,7 +28,8 @@ type optionsType = {
 };
 
 const Options = (props: optionsType) => {
-	const { setPostURL, setPostUser, colorState, postState } = props;
+	const { setPostURL, setPostUser, colorState, postState, setFontFamily } =
+		props;
 
 	const [urlLoading, seturlLoading] = useState(false);
 	const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -62,7 +66,7 @@ const Options = (props: optionsType) => {
 
 	return (
 		<header className='w-full flex items-center justify-center flex-col relative'>
-			<span className='w-4/5 max-w-[850px]'>
+			<div className='w-4/5 max-w-[850px]'>
 				<div className='flex items-center justify-center w-full'>
 					<input
 						type='text'
@@ -83,7 +87,8 @@ const Options = (props: optionsType) => {
 					)}
 				</div>
 				<div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
-					<span className='flex gap-2 items-center'>
+					{/* Color */}
+					<div className='flex gap-2 items-center'>
 						<p className='text-fxs'>Change Color: </p>
 						<div
 							className='h-8 w-8 rounded-md cursor-pointer'
@@ -97,29 +102,42 @@ const Options = (props: optionsType) => {
 								className='absolute top-20 left-[30%]'
 							/>
 						)}
-					</span>
+					</div>
 
-					<span className='flex gap-2 items-center'>
-						{postState.posts.length !== 0 && (
-							<>
-								<p>Number of Threads: </p>
-								<div>
-									<select
-										className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-										defaultValue={postState.posts.length}
-										onChange={(event) => setValue(Number(event.target.value))}>
-										{numbers(postState.posts.length).map((value) => (
-											<option value={value} key={value}>
-												{value}
-											</option>
-										))}
-									</select>
-								</div>
-							</>
-						)}
-					</span>
+					{/* Number of threads */}
+					{postState.posts.length !== 0 && (
+						<div className='flex gap-2 items-center'>
+							<p>Number of Threads: </p>
+							<div>
+								<select
+									className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
+									defaultValue={postState.posts.length}
+									onChange={(event) => setValue(Number(event.target.value))}>
+									{numbers(postState.posts.length).map((value) => (
+										<option value={value} key={value}>
+											{value}
+										</option>
+									))}
+								</select>
+							</div>
+						</div>
+					)}
+
+					{/* Custom Fonts */}
+					{postState.posts.length !== 0 && (
+						<div className='flex gap-2 items-center'>
+							<p>Custom Font: </p>
+							<FontPicker
+								autoLoad
+								noMatches={`Can't find a match`}
+								value={(value: string) => setFontFamily(value)}
+								defaultValue='Exo 2'
+								className='w-[200px] max-w-[250px] border-2 border-brand rounded-md relative'
+							/>
+						</div>
+					)}
 				</div>
-			</span>
+			</div>
 			<p className='text-red-600 text-fsm text-center'>{error}</p>
 		</header>
 	);

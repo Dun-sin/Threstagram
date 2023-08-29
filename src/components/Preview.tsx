@@ -4,8 +4,20 @@ import { InfinitySpin } from 'react-loader-spinner';
 
 import { elementToImage } from '../utils/helper';
 
-const Preview = (props) => {
-	const { postContent, color, postUser } = props;
+type User = {
+	username: string;
+	avatar: string;
+};
+
+type PreviewProps = {
+	postContent: any[];
+	color: string;
+	postUser: User;
+	fontFamily: string;
+};
+
+const Preview = (props: PreviewProps) => {
+	const { postContent, color, postUser, fontFamily } = props;
 	const [downloadLoading, setDownloadLoading] = useState(false);
 
 	const handleDownload = async () => {
@@ -34,13 +46,13 @@ const Preview = (props) => {
 					<div
 						className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
 						key={index}
-						style={{ backgroundColor: color }}>
+						style={{ backgroundColor: color, fontFamily }}>
 						{postContent.length !== 1 && (
 							<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
 								{index}
 							</span>
 						)}
-						<span className={`text-lg h-[80%] flex items-center`}>
+						<span className={`text-f2xs h-[80%] flex items-center`}>
 							{content}
 						</span>
 						<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>

@@ -23,6 +23,7 @@ export default function Home() {
 
 	const [postURL, setPostURL] = useState('');
 	const [color, setColor] = useState<string>('#ff4847');
+	const [fontFamily, setFontFamily] = useState('Exo 2');
 
 	const [postContent, setPostContent] = useState([]);
 	const [postUser, setPostUser] = useState<User>({
@@ -69,6 +70,7 @@ export default function Home() {
 				<Options
 					setPostURL={setPostURL}
 					setPostUser={setPostUser}
+					setFontFamily={setFontFamily}
 					colorState={{ color, setColor }}
 					postState={{ posts: postContent, setPostContent }}
 				/>
@@ -84,6 +86,7 @@ export default function Home() {
 							postContent={postContent}
 							color={color}
 							postUser={postUser}
+							fontFamily={fontFamily}
 						/>
 					)
 				)}

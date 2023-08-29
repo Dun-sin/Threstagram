@@ -19,8 +19,13 @@ body {
 		'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
 		sans-serif;
 }
-/* 
-[data-testid] {
-	display: grid;
-	place-content: center;
-} */
+.fontpicker__search,
+.fontpicker__preview {
+	color: #060b0a !important;
+	background-color: #f9ffff !important;
+}
+
+.fontpicker__preview {
+	background-color: #f9ffff !important;
+	color: #060b0a !important;
+}
