@@ -24,8 +24,8 @@ export const elementToImage = async (
 	const elements = [];
 	const dataURLs = [];
 
-	for (let index = 0; index < numOfElement - 1; index++) {
-		const element = document.querySelector(`.instagram-${index + 1}`);
+	for (let index = 0; index <= numOfElement - 1; index++) {
+		const element = document.querySelector(`.instagram-${index}`);
 		elements.push(element);
 	}
 
