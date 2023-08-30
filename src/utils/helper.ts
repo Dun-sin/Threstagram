@@ -1,11 +1,5 @@
 import domtoimage from 'dom-to-image';
 
-export function extractImageUrl(inputUrl: string): string {
-	// Use regex to match either '.png' or '.jpg' and remove everything after it
-	const imageUrl = inputUrl.replace(/\.(png|jpg).*$/i, '.$1');
-	return imageUrl;
-}
-
 export const extractUserName = (url: string): string => {
 	return url.split('@')[1].split('/')[0];
 };
