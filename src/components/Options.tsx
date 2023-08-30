@@ -2,11 +2,12 @@ import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
-import FontPicker from 'react-fontpicker-ts';
-import 'react-fontpicker-ts/dist/index.css';
+// import FontPicker from 'react-fontpicker-ts';
+// import 'react-fontpicker-ts/dist/index.css';
 
 import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
+import FontPicker from './FontPicker';
 
 type User = {
 	username: string;
@@ -127,13 +128,14 @@ const Options = (props: optionsType) => {
 					{postState.posts.length !== 0 && (
 						<div className='flex gap-2 items-center'>
 							<p>Custom Font: </p>
-							<FontPicker
+							<FontPicker onChange={(value) => setFontFamily(value)} />
+							{/* <FontPicker
 								autoLoad
 								noMatches={`Can't find a match`}
 								value={(value: string) => setFontFamily(value)}
 								defaultValue='Exo 2'
 								className='w-[200px] max-w-[250px] border-2 border-brand rounded-md relative'
-							/>
+							/> */}
 						</div>
 					)}
 				</div>
