@@ -67,7 +67,7 @@ const Preview = (props: PreviewProps) => {
 				))}
 			</section>
 			<button
-				className='bg-brand rounded-md h-16 p-4 font-medium w-60 flex items-center justify-center'
+				className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'
 				onClick={handleDownload}>
 				{downloadLoading ? (
 					<span className='flex items-center justify-center w-full'>
