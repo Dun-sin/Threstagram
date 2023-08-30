@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
 
-import { elementToImage } from '../utils/helper';
+import { elementToImage, extractImageUrl } from '../utils/helper';
 
 type User = {
 	username: string;
@@ -56,11 +56,11 @@ const Preview = (props: PreviewProps) => {
 							{content}
 						</span>
 						<span className='flex gap-6 border-t border-secondary border-spacing-5 h-[10%]'>
-							{/* <img
+							<img
 								src={extractImageUrl(postUser.avatar)}
 								alt={postUser.username}
 								className='h-6 w-6 rounded-full'
-							/> */}
+							/>
 							<p className='text-fsm font-semibold'>@{postUser.username}</p>
 						</span>
 					</div>
