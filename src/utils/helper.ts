@@ -18,25 +18,32 @@ export const elementToImage = async (
 	const elements = [];
 	const dataURLs = [];
 
-	for (let index = 0; index <= numOfElement - 1; index++) {
+	[...new Array(numOfElement)].map((value, index) => {
 		const element = document.querySelector(`.instagram-${index}`);
 		elements.push(element);
-	}
+		return '-';
+	});
 
 	const scale = 2;
-	for (const element of elements) {
-		const options = {
-			height: element.offsetHeight * scale,
-			style: {
-				transform: `scale(${scale}) translate(${
-					element.offsetWidth / 2 / scale
-				}px, ${element.offsetHeight / 2 / scale}px)`,
-			},
-			width: element.offsetWidth * scale,
-		};
+	try {
+		for (const element of elements) {
+			const options = {
+				height: element.offsetHeight * scale,
+				style: {
+					transform: `scale(${scale}) translate(${
+						element.offsetWidth / 2 / scale
+					}px, ${element.offsetHeight / 2 / scale}px)`,
+				},
+				width: element.offsetWidth * scale,
+			};
 
-		const dataURL = await domtoimage.toPng(element, options);
-		dataURLs.push(dataURL);
+			const dataURL = await domtoimage.toPng(element, options);
+
+			dataURLs.push(dataURL);
+		}
+	} catch (error) {
+		console.log(error);
+		return [];
 	}
 
 	return dataURLs;

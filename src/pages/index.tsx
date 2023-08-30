@@ -23,7 +23,7 @@ export default function Home() {
 
 	const [postURL, setPostURL] = useState('');
 	const [color, setColor] = useState<string>('#ff4847');
-	const [fontFamily, setFontFamily] = useState('Exo 2');
+	const [fontFamily, setFontFamily] = useState('Exo2');
 
 	const [postContent, setPostContent] = useState([]);
 	const [postUser, setPostUser] = useState<User>({

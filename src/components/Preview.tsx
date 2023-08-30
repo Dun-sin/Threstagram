@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
 
@@ -47,7 +47,8 @@ const Preview = (props: PreviewProps) => {
 					<div
 						className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
 						key={index}
-						style={{ backgroundColor: color, fontFamily }}>
+						style={{ backgroundColor: color, fontFamily }}
+						id='card-container'>
 						{postContent.length !== 1 && (
 							<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
 								{index}
@@ -57,7 +58,7 @@ const Preview = (props: PreviewProps) => {
 							{content}
 						</span>
 						<span className='flex gap-2 items-center border-t border-secondary border-spacing-5 h-[10%]'>
-							<div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
+							{/* <div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
 								<Image
 									src={postUser.avatar}
 									alt={postUser.username}
@@ -65,7 +66,7 @@ const Preview = (props: PreviewProps) => {
 									fill
 									className='object-cover'
 								/>
-							</div>
+							</div> */}
 							<p className='text-fxs font-medium'>@{postUser.username}</p>
 						</span>
 					</div>
