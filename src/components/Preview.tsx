@@ -58,7 +58,7 @@ const Preview = (props: PreviewProps) => {
 							{content}
 						</span>
 						<span className='flex gap-2 items-center border-t border-secondary border-spacing-5 h-[10%]'>
-							{/* <div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
+							<div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
 								<Image
 									src={postUser.avatar}
 									alt={postUser.username}
@@ -66,7 +66,7 @@ const Preview = (props: PreviewProps) => {
 									fill
 									className='object-cover'
 								/>
-							</div> */}
+							</div>
 							<p className='text-fxs font-medium'>@{postUser.username}</p>
 						</span>
 					</div>
