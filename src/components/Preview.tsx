@@ -4,24 +4,24 @@ import { InfinitySpin } from 'react-loader-spinner';
 
 import { elementToImage } from '../utils/helper';
 import Image from 'next/image';
-
-type User = {
-	username: string;
-	avatar: string;
-};
+import { User } from '../utils/types';
+import PreviewCard from './PreviewCard';
 
 type PreviewProps = {
 	postContent: any[];
 	color: string;
 	postUser: User;
 	fontFamily: string;
+	setPostContent: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 const Preview = (props: PreviewProps) => {
 	const { postContent, color, postUser, fontFamily, setPostContent } = props;
 	const [downloadLoading, setDownloadLoading] = useState(false);
+	const [hideMenubar, setHideMenuBar] = useState(false);
 
 	const handleDownload = async () => {
+		setHideMenuBar(true);
 		if (postContent.length === 0) return;
 		setDownloadLoading(true);
 
@@ -35,16 +35,16 @@ const Preview = (props: PreviewProps) => {
 		});
 
 		setDownloadLoading(false);
+		setHideMenuBar(false);
 	};
 
 	return (
 		<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
 			<section
-				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-					postContent.length === 1 && 'justify-center'
-				}`}>
+				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${postContent.length === 1 && 'justify-center'
+					}`}>
+				{postContent.map((content: string, index: number) => (
 					<PreviewCard hideMenubar={hideMenubar} key={`${postUser.username}-${index}`} content={content} index={index} color={color} fontFamily={fontFamily} postContent={postContent} postUser={postUser} setPostContent={setPostContent} />
-					</div>
 				))}
 			</section>
 			<button
