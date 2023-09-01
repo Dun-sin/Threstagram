@@ -36,6 +36,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
+    "prettier": "^3.0.3",
     "react-fontpicker-ts": "^0.3.0",
     "react-spinners": "^0.13.8",
     "semantic-release": "^21.1.1",
