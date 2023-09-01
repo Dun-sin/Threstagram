@@ -12,6 +12,7 @@
     "@types/dom-to-image": "^2.6.4",
     "next": "13.1.2",
     "next-seo": "^6.1.0",
+    "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-loader-spinner": "^5.4.5",
