@@ -19,7 +19,9 @@ export default async function handler(
 		}
 
 		const post = (await threadsAPI.getThreads(postID)).containing_thread;
-		post.thread_items.forEach((value) => content.push(value.post.caption.text));
+		post.thread_items.forEach((value, index) => {
+			return content.push(value.post.caption.text);
+		});
 
 		const reply = (await threadsAPI.getThreads(postID)).reply_threads;
 		if (reply.length !== 0) {
@@ -48,10 +50,12 @@ function getReplyContent(reply: Thread[], content: any[], username: string) {
 		const replyAuthor = value.post.text_post_app_info.reply_to_author;
 		if (replyAuthor['username'] !== username) return;
 
+		if (!!value.post.text_post_app_info.share_info.quoted_post) return;
+
 		replyPost.push(value.post);
 	});
 
-	replyPost.forEach((element) => {
-		content.push(element.caption.text);
+	replyPost.forEach((value, index) => {
+		content.push(value.caption.text);
 	});
 }
