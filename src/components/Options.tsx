@@ -26,17 +26,26 @@ type optionsType = {
 		posts: any[];
 		setPostContent: Dispatch<SetStateAction<any[]>>;
 	};
+	errorState: {
+		error: string;
+		setError: Dispatch<SetStateAction<string>>;
+	};
 };
 
 const Options = (props: optionsType) => {
-	const { setPostURL, setPostUser, colorState, postState, setFontFamily } =
-		props;
+	const {
+		setPostURL,
+		setPostUser,
+		colorState,
+		postState,
+		setFontFamily,
+		errorState,
+	} = props;
 
 	const [urlLoading, seturlLoading] = useState(false);
 	const [isPickerOpen, setIsPickerOpen] = useState(false);
 
 	const [value, setValue] = useState(postState.posts.length);
-	const [error, setError] = useState('');
 
 	const urlRef = useRef<HTMLInputElement>(null);
 
@@ -50,10 +59,10 @@ const Options = (props: optionsType) => {
 		urlRef.current.value = '';
 
 		if (!(url.includes('threads.net') && url.includes('post'))) {
-			setError('Invalid Link');
+			errorState.setError('Invalid Link');
 			return;
 		}
-		setError('');
+		errorState.setError('');
 
 		seturlLoading(true);
 		setPostURL(url);
@@ -140,7 +149,7 @@ const Options = (props: optionsType) => {
 					)}
 				</div>
 			</div>
-			<p className='text-red-600 text-fsm text-center'>{error}</p>
+			<p className='text-red-600 text-fsm text-center'>{errorState.error}</p>
 		</header>
 	);
 };

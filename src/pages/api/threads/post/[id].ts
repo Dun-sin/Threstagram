@@ -20,6 +20,13 @@ export default async function handler(
 
 		const post = (await threadsAPI.getThreads(postID)).containing_thread;
 		post.thread_items.forEach((value, index) => {
+			if (!!value.post.text_post_app_info.share_info.quoted_post) {
+				res
+					.status(200)
+					.json({ isSuccess: false, message: `Can't work with a quote tweet` });
+				return;
+			}
+
 			return content.push(value.post.caption.text);
 		});
 
@@ -28,7 +35,7 @@ export default async function handler(
 			getReplyContent(reply, content, username);
 		}
 
-		res.status(200).json({ isSucess: true, message: content });
+		res.status(200).json({ isSuccess: true, message: content });
 	} else {
 		res
 			.status(500)

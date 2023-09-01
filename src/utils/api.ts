@@ -16,7 +16,7 @@ export const getPostContent = async (id: string, username: string) => {
 		);
 
 		const data = await response.json();
-		return data.message;
+		return data;
 	} catch (error) {
 		console.error(error);
 	}

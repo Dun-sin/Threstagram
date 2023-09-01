@@ -21,6 +21,7 @@ type User = {
 export default function Home() {
 	const [contentLoading, setContentLoading] = useState(false);
 
+	const [error, setError] = useState('');
 	const [postURL, setPostURL] = useState('');
 	const [color, setColor] = useState<string>('#ff4847');
 	const [fontFamily, setFontFamily] = useState('Exo2');
@@ -39,7 +40,12 @@ export default function Home() {
 			const content = await getPostContent(id, postUser.username);
 
 			setContentLoading(false);
-			setPostContent(content);
+			console.log(content.isSuccess);
+			if (content.isSuccess) {
+				setPostContent(content.message);
+			} else {
+				setError(content.message);
+			}
 		})();
 	}, [postUser]);
 
@@ -73,6 +79,7 @@ export default function Home() {
 					setFontFamily={setFontFamily}
 					colorState={{ color, setColor }}
 					postState={{ posts: postContent, setPostContent }}
+					errorState={{ error, setError }}
 				/>
 
 				{contentLoading ? (
