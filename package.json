@@ -10,7 +10,6 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "next lint",
     "fix": "eslint --ext .ts --ext .tsx --fix ./src"
-
   },
   "dependencies": {
     "@types/dom-to-image": "^2.6.4",
@@ -27,6 +26,8 @@
     "@iconify/react": "^4.1.1",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
     "autoprefixer": "^10.4.13",
     "cz-conventional-changelog": "^3.3.0",
     "dom-to-image": "^2.6.0",
