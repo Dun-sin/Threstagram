@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "lint": "next lint",
+    "fix": "eslint --ext .ts --ext .tsx --fix ./src"
   },
   "dependencies": {
     "@types/dom-to-image": "^2.6.4",
