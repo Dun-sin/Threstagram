@@ -15,10 +15,6 @@ import Options from '../components/Options';
 import Preview from '../components/Preview';
 import { User } from '../utils/types';
 
-type User = {
-	username: string;
-	avatar: string;
-};
 export default function Home() {
 	const [contentLoading, setContentLoading] = useState(false);
 
@@ -95,6 +91,7 @@ export default function Home() {
 							color={color}
 							postUser={postUser}
 							fontFamily={fontFamily}
+							setPostContent={setPostContent}
 						/>
 					)
 				)}
