@@ -18,7 +18,7 @@ type PreviewProps = {
 };
 
 const Preview = (props: PreviewProps) => {
-	const { postContent, color, postUser, fontFamily } = props;
+	const { postContent, color, postUser, fontFamily, setPostContent } = props;
 	const [downloadLoading, setDownloadLoading] = useState(false);
 
 	const handleDownload = async () => {
