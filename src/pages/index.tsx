@@ -13,6 +13,7 @@ import { extractPostID } from '../utils/helper';
 import { getPostContent } from '../utils/api';
 import Options from '../components/Options';
 import Preview from '../components/Preview';
+import { User } from '../utils/types';
 
 type User = {
 	username: string;
