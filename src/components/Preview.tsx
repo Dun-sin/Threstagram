@@ -40,34 +40,10 @@ const Preview = (props: PreviewProps) => {
 	return (
 		<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
 			<section
-				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${postContent.length === 1 && 'justify-center'
-					}`}>
-				{postContent.map((content: string, index: number) => (
-					<div
-						className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
-						key={index}
-						style={{ backgroundColor: color, fontFamily }}
-						id='card-container'>
-						{postContent.length !== 1 && (
-							<span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
-								{index}
-							</span>
-						)}
-						<span className={`text-f2xs h-[80%] flex items-center`}>
-							{content}
-						</span>
-						<span className='flex gap-2 items-center border-t border-secondary border-spacing-5 h-[10%]'>
-							<div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
-								<Image
-									src={postUser.avatar}
-									alt={postUser.username}
-									quality={100}
-									fill
-									className='object-cover'
-								/>
-							</div>
-							<p className='text-fxs font-medium'>@{postUser.username}</p>
-						</span>
+				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
+					postContent.length === 1 && 'justify-center'
+				}`}>
+					<PreviewCard hideMenubar={hideMenubar} key={`${postUser.username}-${index}`} content={content} index={index} color={color} fontFamily={fontFamily} postContent={postContent} postUser={postUser} setPostContent={setPostContent} />
 					</div>
 				))}
 			</section>
