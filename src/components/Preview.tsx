@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import React, { useState } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
 
 import { elementToImage } from '../utils/helper';
-import Image from 'next/image';
-import { User } from '../utils/types';
+import { type User } from '../utils/types';
+
 import PreviewCard from './PreviewCard';
 
 type PreviewProps = {
-	postContent: any[];
+	postContent: string[];
 	color: string;
 	postUser: User;
 	fontFamily: string;
-	setPostContent: React.Dispatch<React.SetStateAction<any[]>>;
+	setPostContent: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const Preview = (props: PreviewProps) => {

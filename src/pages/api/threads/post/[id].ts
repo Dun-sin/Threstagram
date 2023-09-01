@@ -1,6 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
-import { ThreadsAPI, Thread, ThreadItem } from 'threads-api';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { type NextApiRequest, type NextApiResponse } from 'next';
+import { ThreadsAPI, type Thread, type ThreadItem } from 'threads-api';
 
 const threadsAPI = new ThreadsAPI();
 
@@ -19,7 +21,7 @@ export default async function handler(
 		}
 
 		const post = (await threadsAPI.getThreads(postID)).containing_thread;
-		post.thread_items.forEach((value, index) => {
+		post.thread_items.forEach((value, _index) => {
 			if (!!value.post.text_post_app_info.share_info.quoted_post) {
 				res
 					.status(200)
@@ -43,7 +45,7 @@ export default async function handler(
 	}
 }
 
-function getReplyContent(reply: Thread[], content: any[], username: string) {
+function getReplyContent(reply: Thread[], content: string[], username: string) {
 	const thread_items = [];
 	const replyPost = [];
 
@@ -62,7 +64,7 @@ function getReplyContent(reply: Thread[], content: any[], username: string) {
 		replyPost.push(value.post);
 	});
 
-	replyPost.forEach((value, index) => {
+	replyPost.forEach((value, _index) => {
 		content.push(value.caption.text);
 	});
 }

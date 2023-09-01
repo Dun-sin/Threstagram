@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+import { type NextApiRequest, type NextApiResponse } from 'next';
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default async (_req: NextApiRequest, res: NextApiResponse) => {
 	const fontsPath = path.join(process.cwd(), 'public/assets/fonts'); // Adjust the path to your fonts folder
 	try {
 		const fonts = await fs.readdir(fontsPath);

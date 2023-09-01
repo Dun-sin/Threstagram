@@ -1,20 +1,20 @@
+/* eslint-disable import/order */
 // next/react
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // libraries
 import { NextSeo } from 'next-seo';
 import { InfinitySpin } from 'react-loader-spinner';
 
 // components
+import Options from '../components/Options';
+import Preview from '../components/Preview';
 import Social from '../components/Social';
 
 // utils
-import { extractPostID } from '../utils/helper';
 import { getPostContent } from '../utils/api';
-import Options from '../components/Options';
-import Preview from '../components/Preview';
-import { User } from '../utils/types';
-
+import { extractPostID } from '../utils/helper';
+import { type User } from '../utils/types';
 export default function Home() {
 	const [contentLoading, setContentLoading] = useState(false);
 
@@ -23,7 +23,7 @@ export default function Home() {
 	const [color, setColor] = useState<string>('#ff4847');
 	const [fontFamily, setFontFamily] = useState('Exo2');
 
-	const [postContent, setPostContent] = useState([]);
+	const [postContent, setPostContent] = useState<string[]>([]);
 	const [postUser, setPostUser] = useState<User>({
 		username: '',
 		avatar: '',
@@ -31,19 +31,23 @@ export default function Home() {
 
 	useEffect(() => {
 		if (postUser.username === '' && postURL === '') return;
-		(async () => {
+		void (async () => {
 			setContentLoading(true);
 			const id = extractPostID(postURL);
 			const content = await getPostContent(id, postUser.username);
 
 			setContentLoading(false);
-			console.log(content.isSuccess);
-			if (content.isSuccess) {
-				setPostContent(content.message);
+			if ('isSuccess' in content) {
+				if (content.isSuccess && typeof content.message !== 'string') {
+					setPostContent(content.message);
+				} else {
+					setError(content.message as string);
+				}
 			} else {
-				setError(content.message);
+				setError('An error occurred while fetching the post content.');
 			}
 		})();
+
 	}, [postUser]);
 
 	return (

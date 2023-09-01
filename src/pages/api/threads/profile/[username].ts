@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { type NextApiRequest, type NextApiResponse } from 'next';
 import { ThreadsAPI } from 'threads-api';
 
 const threadsAPI = new ThreadsAPI();

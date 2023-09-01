@@ -1,14 +1,16 @@
+import React,{ useRef, useState } from "react";
+
 import Image from "next/image";
-import { User } from "../utils/types";
-import { useRef, useState } from "react";
+
+import { type User } from "../utils/types";
 
 type PreviewCardProps = {
     index: number;
     content: string;
     color: string;
     fontFamily: string;
-    postContent: any[];
-    setPostContent: React.Dispatch<React.SetStateAction<any[]>>;
+    postContent: string[];
+    setPostContent: React.Dispatch<React.SetStateAction<string[]>>;
     postUser: User;
     hideMenubar: boolean
 };

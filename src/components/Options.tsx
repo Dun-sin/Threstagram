@@ -1,12 +1,16 @@
-import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React,{ useRef, useState, type Dispatch, type SetStateAction, useEffect } from 'react';
 
-import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
+import ColorPicker from 'react-pick-color';
 // import FontPicker from 'react-fontpicker-ts';
 // import 'react-fontpicker-ts/dist/index.css';
 
-import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
+import { extractUserName } from '../utils/helper';
+
 import FontPicker from './FontPicker';
 
 type User = {
@@ -156,8 +160,8 @@ const Options = (props: optionsType) => {
 
 export default Options;
 
-function numbers(postNumber: number) {
-	const number = [];
+function numbers(postNumber: number): number[] {
+	const number: number[] = [];
 	for (let index = 1; index < postNumber + 1; index++) {
 		number.push(index);
 	}

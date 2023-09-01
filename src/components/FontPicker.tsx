@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type fontType = {
 	name: string;
@@ -18,9 +18,9 @@ const FontPicker = (props: FontPickerProps) => {
 
 	useEffect(() => {
 		// Load font options from the API route
-		fetch('/api/fonts')
+		void fetch('/api/fonts')
 			.then((response) => response.json())
-			.then((data) => {
+			.then((data: fontType[]) => {
 				setFontOptions(data);
 			});
 	}, []);
