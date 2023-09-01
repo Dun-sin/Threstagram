@@ -40,9 +40,8 @@ const Preview = (props: PreviewProps) => {
 	return (
 		<span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
 			<section
-				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-					postContent.length === 1 && 'justify-center'
-				}`}>
+				className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${postContent.length === 1 && 'justify-center'
+					}`}>
 				{postContent.map((content: string, index: number) => (
 					<div
 						className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
