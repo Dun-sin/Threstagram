@@ -99,6 +99,7 @@ const Preview = (props: PreviewProps) => {
                   const updatedContent = e.currentTarget.innerHTML;
                   onChange(updatedContent, index);
                 }}
+                onChange={null}
                 html={content}
               />
 
