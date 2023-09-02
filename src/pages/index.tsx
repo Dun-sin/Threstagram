@@ -40,7 +40,6 @@ export default function Home() {
 			const content = await getPostContent(id, postUser.username);
 
 			setContentLoading(false);
-			console.log(content.isSuccess);
 			if (content.isSuccess) {
 				setPostContent(content.message);
 			} else {

@@ -48,3 +48,20 @@ export const elementToImage = async (
 
 	return dataURLs;
 };
+
+// 290
+export const calculateFontSize = (text: string) => {
+	const maxLength = 290;
+	const defaultFontSize = 1;
+	const textLength = text.length;
+
+	if (textLength <= maxLength) {
+		return `${defaultFontSize}rem`;
+	} else {
+		// Calculate a smaller font size for longer text
+		const scaleFactor = maxLength / textLength;
+		let adjustedFontSize = defaultFontSize * +scaleFactor.toFixed(1);
+		adjustedFontSize <= 0.7 && (adjustedFontSize += 0.2);
+		return `${adjustedFontSize}rem`;
+	}
+};
