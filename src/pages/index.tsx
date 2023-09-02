@@ -89,7 +89,7 @@ export default function Home() {
           // Display Content
           !(postContent.length === 0) && (
             <Preview
-              postContent={postContent}
+              postState={{ posts: postContent, setPostContent }}
               color={color}
               postUser={postUser}
               fontFamily={fontFamily}

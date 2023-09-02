@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
-import { calculateFontSize, elementToImage } from '../utils/helper';
+import ContentEditable from 'react-contenteditable';
+import sanitizeHtml from 'sanitize-html';
 import Image from 'next/image';
+
+import { calculateFontSize, elementToImage } from '../utils/helper';
 
 type User = {
   username: string;
@@ -10,7 +13,10 @@ type User = {
 };
 
 type PreviewProps = {
-  postContent: any[];
+  postState: {
+    posts: any[];
+    setPostContent: Dispatch<SetStateAction<any[]>>;
+  };
   color: string;
   postUser: User;
   fontFamily: string;
@@ -19,14 +25,14 @@ type PreviewProps = {
 const zip = require('jszip')();
 
 const Preview = (props: PreviewProps) => {
-  const { postContent, color, postUser, fontFamily } = props;
+  const { postState, color, postUser, fontFamily } = props;
   const [downloadLoading, setDownloadLoading] = useState(false);
 
   const handleDownload = async () => {
-    if (postContent.length === 0) return;
+    if (postState.posts.length === 0) return;
     setDownloadLoading(true);
 
-    const data = await elementToImage(postContent.length);
+    const data = await elementToImage(postState.posts.length);
     const promises = data.map((url, index) => {
       return fetch(url)
         .then((response) => response.blob())
@@ -52,14 +58,26 @@ const Preview = (props: PreviewProps) => {
     });
   };
 
+  const onChange = (content?: any, index?: number) => {
+    let newContent = content;
+    const newArray = [...postState.posts];
+    if (content.length >= 500) {
+      newContent = content.slice(0, 500);
+      return;
+    }
+    newArray[index] = newContent;
+
+    postState.setPostContent(newArray);
+  };
+
   return (
     <span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
       <section
         className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-          postContent.length === 1 && 'justify-center'
+          postState.posts.length === 1 && 'justify-center'
         }`}
       >
-        {postContent.map((content: string, index: number) => {
+        {postState.posts.map((content: string, index: number) => {
           return (
             <div
               className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
@@ -67,17 +85,23 @@ const Preview = (props: PreviewProps) => {
               style={{ backgroundColor: color, fontFamily }}
               id='card-container'
             >
-              {postContent.length !== 1 && (
+              {postState.posts.length !== 1 && (
                 <span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
                   {index}
                 </span>
               )}
-              <p
+              <ContentEditable
                 className={`h-[80%] flex items-center whitespace-pre-line`}
                 style={{ fontSize: calculateFontSize(content) }}
-              >
-                {content}
-              </p>
+                disabled={false}
+                tagName='p'
+                onBlur={(e) => {
+                  const updatedContent = e.currentTarget.innerHTML;
+                  onChange(updatedContent, index);
+                }}
+                html={content}
+              />
+
               <span className='flex gap-2 items-center border-t border-secondary border-spacing-5 h-[10%]'>
                 <div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
                   <Image
