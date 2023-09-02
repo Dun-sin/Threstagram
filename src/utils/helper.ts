@@ -24,7 +24,7 @@ export const elementToImage = async (
     return '-';
   });
 
-  const scale = 3;
+  const scale = 2;
   try {
     for (const element of elements) {
       const options = {
