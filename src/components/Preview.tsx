@@ -73,7 +73,7 @@ const Preview = (props: PreviewProps) => {
                 </span>
               )}
               <p
-                className={`h-[80%] flex items-center`}
+                className={`h-[80%] flex items-center whitespace-pre-line`}
                 style={{ fontSize: calculateFontSize(content) }}
               >
                 {content}
