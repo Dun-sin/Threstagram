@@ -48,12 +48,11 @@ const Options = (props: optionsType) => {
   const [value, setValue] = useState(postState.posts.length);
 
   const urlRef = useRef<HTMLInputElement>(null);
+  const colorPickerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     postState.setPostContent(postState.posts.slice(0, value));
   }, [value]);
-
-  const colorPickerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -121,27 +120,30 @@ const Options = (props: optionsType) => {
             </button>
           )}
         </div>
-        <div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
-          {/* Color */}
-          <div className='flex gap-2 items-center'>
-            <p className='text-fxs'>Change Color: </p>
-            <div
-              className='h-8 w-8 rounded-md cursor-pointer'
-              style={{ backgroundColor: colorState.color }}
-              onClick={() => setIsPickerOpen(!isPickerOpen)}
-            />
-            {isPickerOpen && (
-              <span className='absolute top-20 left-[30%]' ref={colorPickerRef}>
-                <ColorPicker
-                  color={colorState.color}
-                  onChange={(color) => colorState.setColor(color.hex)}
-                />
-              </span>
-            )}
-          </div>
+        {postState.posts.length !== 0 && (
+          <div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
+            {/* Color */}
+            <div className='flex gap-2 items-center'>
+              <p className='text-fxs'>Change Color: </p>
+              <div
+                className='h-8 w-8 rounded-md cursor-pointer'
+                style={{ backgroundColor: colorState.color }}
+                onClick={() => setIsPickerOpen(!isPickerOpen)}
+              />
+              {isPickerOpen && (
+                <span
+                  className='absolute top-20 left-[30%]'
+                  ref={colorPickerRef}
+                >
+                  <ColorPicker
+                    color={colorState.color}
+                    onChange={(color) => colorState.setColor(color.hex)}
+                  />
+                </span>
+              )}
+            </div>
 
-          {/* Number of threads */}
-          {postState.posts.length !== 0 && (
+            {/* Number of threads */}
             <div className='flex gap-2 items-center'>
               <p>Number of Threads: </p>
               <div>
@@ -158,23 +160,13 @@ const Options = (props: optionsType) => {
                 </select>
               </div>
             </div>
-          )}
 
-          {/* Custom Fonts */}
-          {postState.posts.length !== 0 && (
             <div className='flex gap-2 items-center'>
               <p>Custom Font: </p>
               <FontPicker onChange={(value) => setFontFamily(value)} />
-              {/* <FontPicker
-								autoLoad
-								noMatches={`Can't find a match`}
-								value={(value: string) => setFontFamily(value)}
-								defaultValue='Exo 2'
-								className='w-[200px] max-w-[250px] border-2 border-brand rounded-md relative'
-							/> */}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       <p className='text-red-600 text-fsm text-center'>{errorState.error}</p>
     </header>
