@@ -57,7 +57,7 @@ export const calculateFontSize = (text: string) => {
 
   if (textLength <= maxLength) {
     // Increase font size for shorter text
-    const scaleFactor = 1 - textLength / maxLength;
+    const scaleFactor = 0.9 - textLength / maxLength;
     let adjustedFontSize = defaultFontSize + scaleFactor;
     adjustedFontSize >= 2 && (adjustedFontSize = 1.7); // Limit maximum font size
     return `${adjustedFontSize.toFixed(1)}rem`;

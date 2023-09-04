@@ -92,7 +92,7 @@ const Preview = (props: PreviewProps) => {
                 </span>
               )}
               <ContentEditable
-                className={`h-[80%] flex items-center whitespace-pre-line`}
+                className={`h-[80%] flex items-center whitespace-pre-line break-words`}
                 style={{ fontSize: calculateFontSize(content) }}
                 disabled={false}
                 tagName='p'
