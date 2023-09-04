@@ -3,42 +3,27 @@ import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
 import { PongSpinner } from 'react-spinners-kit';
-// import FontPicker from 'react-fontpicker-ts';
-// import 'react-fontpicker-ts/dist/index.css';
 
 import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
 import FontPicker from './FontPicker';
 
-import { User, ColorType } from '../types';
+import { useContent } from '../context/ContentContext';
+import { useUser } from '../context/UserContext';
+import { useOptions } from '../context/OptionsContext';
 
 type optionsType = {
   setPostURL: Dispatch<SetStateAction<string>>;
-  setPostUser: Dispatch<SetStateAction<User>>;
-  setFontFamily: Dispatch<SetStateAction<string>>;
-  colorState: {
-    color: ColorType;
-    setColor: Dispatch<SetStateAction<ColorType>>;
-  };
-  postState: {
-    posts: any[];
-    setPostContent: Dispatch<SetStateAction<any[]>>;
-  };
-  errorState: {
-    error: string;
-    setError: Dispatch<SetStateAction<string>>;
-  };
 };
 
 const Options = (props: optionsType) => {
-  const {
-    setPostURL,
-    setPostUser,
-    colorState,
-    postState,
-    setFontFamily,
-    errorState,
-  } = props;
+  const { setPostURL } = props;
+
+  const { contentState, dispatchContent } = useContent();
+  const { dispatchUser } = useUser();
+  const { optionsState, dispatchOptions } = useOptions();
+
+  const { color } = optionsState;
 
   const [urlLoading, seturlLoading] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState({
@@ -47,13 +32,16 @@ const Options = (props: optionsType) => {
   });
   const [addColor, setAddColor] = useState(false);
 
-  const [value, setValue] = useState(postState.posts.length);
+  const [value, setValue] = useState(contentState.postContent.length);
 
   const urlRef = useRef<HTMLInputElement>(null);
   const colorPickerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    postState.setPostContent(postState.posts.slice(0, value));
+    dispatchContent({
+      type: 'SET_CONTENT',
+      payload: contentState.postContent.slice(0, value),
+    });
   }, [value]);
 
   useEffect(() => {
@@ -82,7 +70,7 @@ const Options = (props: optionsType) => {
   }, [isPickerOpen]);
 
   useEffect(() => {
-    !addColor && colorState.setColor({ ...colorState.color, color2: '' });
+    !addColor && dispatchOptions({ type: 'SET_COLOR2', payload: '' });
   }, [addColor]);
 
   const handleOnClick = async () => {
@@ -91,10 +79,10 @@ const Options = (props: optionsType) => {
     urlRef.current.value = '';
 
     if (!(url.includes('threads.net') && url.includes('post'))) {
-      errorState.setError('Invalid Link');
+      dispatchContent({ type: 'SET_ERROR', payload: 'Invalid Link' });
       return;
     }
-    errorState.setError('');
+    dispatchContent({ type: 'SET_ERROR', payload: '' });
 
     seturlLoading(true);
     setPostURL(url);
@@ -102,7 +90,8 @@ const Options = (props: optionsType) => {
     const username = extractUserName(url);
     const avatar = await getUserProfile(username);
 
-    setPostUser({ username, avatar });
+    dispatchUser({ type: 'ADD_USERNAME', payload: username });
+    dispatchUser({ type: 'ADD_AVATAR', payload: avatar });
     seturlLoading(false);
   };
 
@@ -133,7 +122,7 @@ const Options = (props: optionsType) => {
             </button>
           )}
         </div>
-        {postState.posts.length !== 0 && (
+        {contentState.postContent.length !== 0 && (
           <div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
             {/* Color */}
             <div className='flex gap-2 items-center'>
@@ -143,7 +132,7 @@ const Options = (props: optionsType) => {
                   <div
                     className='h-8 w-8 rounded-md cursor-pointer border border-black'
                     style={{
-                      backgroundColor: colorState.color.color1,
+                      backgroundColor: color.color1,
                     }}
                     onClick={() =>
                       setIsPickerOpen({
@@ -158,11 +147,11 @@ const Options = (props: optionsType) => {
                       ref={colorPickerRef}
                     >
                       <ColorPicker
-                        color={colorState.color.color1}
+                        color={color.color1}
                         onChange={(color) =>
-                          colorState.setColor({
-                            ...colorState.color,
-                            color1: color.hex,
+                          dispatchOptions({
+                            type: 'SET_COLOR1',
+                            payload: color.hex,
                           })
                         }
                       />
@@ -173,7 +162,7 @@ const Options = (props: optionsType) => {
                   <span>
                     <div
                       className='h-8 w-8 rounded-md cursor-pointer border border-black'
-                      style={{ backgroundColor: colorState.color.color2 }}
+                      style={{ backgroundColor: color.color2 }}
                       onClick={() =>
                         setIsPickerOpen({
                           ...isPickerOpen,
@@ -187,11 +176,11 @@ const Options = (props: optionsType) => {
                         ref={colorPickerRef}
                       >
                         <ColorPicker
-                          color={colorState.color.color2}
+                          color={color.color2}
                           onChange={(color) =>
-                            colorState.setColor({
-                              ...colorState.color,
-                              color2: color.hex,
+                            dispatchOptions({
+                              type: 'SET_COLOR2',
+                              payload: color.hex,
                             })
                           }
                         />
@@ -213,10 +202,10 @@ const Options = (props: optionsType) => {
               <div>
                 <select
                   className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-                  defaultValue={postState.posts.length}
+                  defaultValue={contentState.postContent.length}
                   onChange={(event) => setValue(Number(event.target.value))}
                 >
-                  {numbers(postState.posts.length).map((value) => (
+                  {numbers(contentState.postContent.length).map((value) => (
                     <option value={value} key={value}>
                       {value}
                     </option>
@@ -227,12 +216,16 @@ const Options = (props: optionsType) => {
 
             <div className='flex gap-2 items-center'>
               <p>Custom Font: </p>
-              <FontPicker onChange={(value) => setFontFamily(value)} />
+              <FontPicker
+                onChange={(value) =>
+                  dispatchOptions({ type: 'SET_FONTFAMILY', payload: value })
+                }
+              />
             </div>
           </div>
         )}
       </div>
-      <p className='text-red-600 text-fsm text-center'>{errorState.error}</p>
+      <p className='text-red-600 text-fsm text-center'>{contentState.error}</p>
     </header>
   );
 };

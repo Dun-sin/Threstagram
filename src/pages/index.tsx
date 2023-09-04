@@ -14,40 +14,35 @@ import { getPostContent } from '../utils/api';
 import Options from '../components/Options';
 import Preview from '../components/Preview';
 
-import { User, ColorType } from '../types';
+import { ColorType } from '../types';
+
+// context
+import { useUser } from '../context/UserContext';
+import { useContent } from '../context/ContentContext';
+import { useOptions } from '../context/OptionsContext';
 
 export default function Home() {
-  const [contentLoading, setContentLoading] = useState(false);
+  const { contentState, dispatchContent } = useContent();
+  const { userState } = useUser();
+  const { optionsState, dispatchOptions } = useOptions();
 
-  const [error, setError] = useState('');
   const [postURL, setPostURL] = useState('');
-  const [color, setColor] = useState<ColorType>({
-    color1: '#ff4847',
-    color2: '',
-  });
-  const [fontFamily, setFontFamily] = useState('Exo2');
-
-  const [postContent, setPostContent] = useState([]);
-  const [postUser, setPostUser] = useState<User>({
-    username: '',
-    avatar: '',
-  });
 
   useEffect(() => {
-    if (postUser.username === '' && postURL === '') return;
+    if (userState.username === '' && postURL === '') return;
     (async () => {
-      setContentLoading(true);
+      dispatchContent({ type: 'START_LOADING', payload: true });
       const id = extractPostID(postURL);
-      const content = await getPostContent(id, postUser.username);
+      const content = await getPostContent(id, userState.username);
 
-      setContentLoading(false);
       if (content.isSuccess) {
-        setPostContent(content.message);
+        dispatchContent({ type: 'SET_CONTENT', payload: content.message });
       } else {
-        setError(content.message);
+        dispatchContent({ type: 'START_LOADING', payload: false });
+        dispatchContent({ type: 'SET_ERROR', payload: content.message });
       }
     })();
-  }, [postUser]);
+  }, [userState]);
 
   return (
     <>
@@ -67,6 +62,7 @@ export default function Home() {
           ],
         }}
       />
+
       <section className='bg-primary text-secondary flex items-center flex-col justify-center md:h-screen min-h-screen w-screen gap-10 pt-5 pb-10'>
         <Social />
         <main className='flex items-center w-full flex-col justify-center gap-4'>
@@ -74,29 +70,19 @@ export default function Home() {
             Convert Your Threads Post To Images
           </h1>
           {/* Input */}
-          <Options
-            setPostURL={setPostURL}
-            setPostUser={setPostUser}
-            setFontFamily={setFontFamily}
-            colorState={{ color, setColor }}
-            postState={{ posts: postContent, setPostContent }}
-            errorState={{ error, setError }}
-          />
+          <Options setPostURL={setPostURL} />
 
-          {contentLoading ? (
+          {contentState.contentLoading ? (
             <span className='flex items-center justify-center w-4/5 max-w-[850px]'>
-              <PongSpinner size={110} color='#fff' loading={contentLoading} />
+              <PongSpinner
+                size={110}
+                color='#fff'
+                loading={contentState.contentLoading}
+              />
             </span>
           ) : (
             // Display Content
-            !(postContent.length === 0) && (
-              <Preview
-                postState={{ posts: postContent, setPostContent }}
-                color={color}
-                postUser={postUser}
-                fontFamily={fontFamily}
-              />
-            )
+            !(contentState.postContent.length === 0) && <Preview />
           )}
         </main>
       </section>
