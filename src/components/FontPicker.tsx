@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useOptions } from '../context/OptionsContext';
 
 type fontType = {
   name: string;
@@ -13,8 +14,12 @@ interface FontPickerProps {
 const FontPicker = (props: FontPickerProps) => {
   const { onChange } = props;
 
+  const { optionsState } = useOptions();
+
+  const { fontFamily } = optionsState;
+
   const [fontOptions, setFontOptions] = useState<fontType[]>([]);
-  const [selectedFont, setSelectedFont] = useState('');
+  const [selectedFont, setSelectedFont] = useState(fontFamily);
 
   useEffect(() => {
     // Load font options from the API route
