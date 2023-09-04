@@ -1,4 +1,5 @@
 import domtoimage from 'dom-to-image';
+import { changeDpiDataUrl } from 'changedpi';
 
 export const extractUserName = (url: string): string => {
   return url.split('@')[1].split('/')[0];
@@ -24,22 +25,25 @@ export const elementToImage = async (
     return '-';
   });
 
-  const scale = 2;
+  const BASE_DPI = 100;
+  const scale = 5;
   try {
     for (const element of elements) {
       const options = {
         height: element.offsetHeight * scale,
         style: {
-          transform: `scale(${scale}) translate(${
-            element.offsetWidth / 2 / scale
-          }px, ${element.offsetHeight / 2 / scale}px)`,
+          transform: `scale(${scale})`,
+          transformOrigin: 'top left',
+          width: `${element.offsetWidth}px`,
+          height: `${element.offsetHeight}px`,
         },
         width: element.offsetWidth * scale,
       };
 
       const dataURL = await domtoimage.toPng(element, options);
+      const changedDataURL = changeDpiDataUrl(dataURL, BASE_DPI * scale);
 
-      dataURLs.push(dataURL);
+      dataURLs.push(changedDataURL);
     }
   } catch (error) {
     console.log(error);
