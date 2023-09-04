@@ -1,27 +1,23 @@
-import { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 
 import { PongSpinner } from 'react-spinners-kit';
 import ContentEditable from 'react-contenteditable';
-import sanitizeHtml from 'sanitize-html';
-import Image from 'next/image';
 
 import { calculateFontSize, elementToImage } from '../utils/helper';
-import { User, ColorType } from '../types';
-
-type PreviewProps = {
-  postState: {
-    posts: any[];
-    setPostContent: Dispatch<SetStateAction<any[]>>;
-  };
-  color: ColorType;
-  postUser: User;
-  fontFamily: string;
-};
+import { useContent } from '../context/ContentContext';
+import { useUser } from '../context/UserContext';
+import { useOptions } from '../context/OptionsContext';
 
 const zip = require('jszip')();
 
-const Preview = (props: PreviewProps) => {
-  const { postState, color, postUser, fontFamily } = props;
+const Preview = () => {
+  const { contentState, dispatchContent } = useContent();
+  const { userState } = useUser();
+  const { optionsState } = useOptions();
+
+  const { color, fontFamily } = optionsState;
+
   const [downloadLoading, setDownloadLoading] = useState(false);
 
   const backgroundColor =
@@ -30,10 +26,10 @@ const Preview = (props: PreviewProps) => {
       : `linear-gradient(to bottom right, ${color.color1}, ${color.color2})`;
 
   const handleDownload = async () => {
-    if (postState.posts.length === 0) return;
+    if (contentState.postContent.length === 0) return;
     setDownloadLoading(true);
 
-    const data = await elementToImage(postState.posts.length);
+    const data = await elementToImage(contentState.postContent.length);
 
     if (data.length === 1) {
       const link = document.createElement('a');
@@ -70,39 +66,42 @@ const Preview = (props: PreviewProps) => {
 
   const onChange = (content?: any, index?: number) => {
     let newContent = content;
-    const newArray = [...postState.posts];
+    const newArray = [...contentState.postContent];
     if (content.length >= 500) {
       newContent = content.slice(0, 500);
       return;
     }
     newArray[index] = newContent;
 
-    postState.setPostContent(newArray);
+    dispatchContent({ type: 'SET_CONTENT', payload: newArray });
   };
 
   return (
     <span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
       <section
         className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-          postState.posts.length === 1 && 'justify-center'
+          contentState.postContent.length === 1 && 'justify-center'
         }`}
       >
-        {postState.posts.map((content: string, index: number) => {
+        {contentState.postContent.map((content: string, index: number) => {
           return (
             <div
-              className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
+              className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
               key={index}
               style={{ background: backgroundColor, fontFamily }}
               id='card-container'
             >
-              {postState.posts.length !== 1 && (
-                <span className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
+              {contentState.postContent.length !== 1 && (
+                <div className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
                   {index}
-                </span>
+                </div>
               )}
               <ContentEditable
-                className={`h-[80%] flex items-center whitespace-pre-line break-words`}
-                style={{ fontSize: calculateFontSize(content) }}
+                className={`h-[80%] flex items-center whitespace-pre-line`}
+                style={{
+                  wordBreak: 'break-word',
+                  fontSize: calculateFontSize(content),
+                }}
                 disabled={false}
                 tagName='p'
                 onBlur={(e) => {
@@ -113,18 +112,22 @@ const Preview = (props: PreviewProps) => {
                 html={content}
               />
 
-              <span className='flex gap-2 items-center border-t border-secondary border-spacing-5 h-[10%]'>
-                <div className='h-8 w-8 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
-                  <Image
-                    src={postUser.avatar}
-                    alt={postUser.username}
-                    quality={100}
-                    fill
-                    className='object-cover'
-                  />
-                </div>
-                <p className='text-fxs font-medium'>@{postUser.username}</p>
-              </span>
+              <div className='flex gap-1 items-center border-t border-secondary border-spacing-5 h-[10%]'>
+                <span className='h-full flex items-center'>
+                  <div className='h-7 w-7 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
+                    <Image
+                      src={userState.avatar}
+                      alt={userState.username}
+                      quality={100}
+                      fill
+                      className='object-cover'
+                    />
+                  </div>
+                </span>
+                <p className='text-fxs font-medium text-center h-full flex items-center'>
+                  <span>@{userState.username}</span>
+                </p>
+              </div>
             </div>
           );
         })}
