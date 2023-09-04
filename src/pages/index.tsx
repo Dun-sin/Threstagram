@@ -14,16 +14,17 @@ import { getPostContent } from '../utils/api';
 import Options from '../components/Options';
 import Preview from '../components/Preview';
 
-type User = {
-  username: string;
-  avatar: string;
-};
+import { User, ColorType } from '../types';
+
 export default function Home() {
   const [contentLoading, setContentLoading] = useState(false);
 
   const [error, setError] = useState('');
   const [postURL, setPostURL] = useState('');
-  const [color, setColor] = useState<string>('#ff4847');
+  const [color, setColor] = useState<ColorType>({
+    color1: '#ff4847',
+    color2: '',
+  });
   const [fontFamily, setFontFamily] = useState('Exo2');
 
   const [postContent, setPostContent] = useState([]);
@@ -69,7 +70,7 @@ export default function Home() {
       <section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-4 relative'>
         <Social />
         <h1 className='text-flg font-bold text-center'>
-          Convert Your Threads Post To Instagram Carousel
+          Convert Your Threads Post To Images
         </h1>
         {/* Input */}
         <Options

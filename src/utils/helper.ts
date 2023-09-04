@@ -60,7 +60,6 @@ export const calculateFontSize = (text: string) => {
     const scaleFactor = 1 - textLength / maxLength;
     let adjustedFontSize = defaultFontSize + scaleFactor;
     adjustedFontSize >= 2 && (adjustedFontSize = 1.7); // Limit maximum font size
-    console.log(text, adjustedFontSize);
     return `${adjustedFontSize.toFixed(1)}rem`;
   } else {
     // Calculate a smaller font size for longer text

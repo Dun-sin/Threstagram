@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import { InfinitySpin } from 'react-loader-spinner';
 import ContentEditable from 'react-contenteditable';
@@ -6,18 +6,14 @@ import sanitizeHtml from 'sanitize-html';
 import Image from 'next/image';
 
 import { calculateFontSize, elementToImage } from '../utils/helper';
-
-type User = {
-  username: string;
-  avatar: string;
-};
+import { User, ColorType } from '../types';
 
 type PreviewProps = {
   postState: {
     posts: any[];
     setPostContent: Dispatch<SetStateAction<any[]>>;
   };
-  color: string;
+  color: ColorType;
   postUser: User;
   fontFamily: string;
 };
@@ -27,6 +23,11 @@ const zip = require('jszip')();
 const Preview = (props: PreviewProps) => {
   const { postState, color, postUser, fontFamily } = props;
   const [downloadLoading, setDownloadLoading] = useState(false);
+
+  const backgroundColor =
+    color.color2 === ''
+      ? color.color1
+      : `linear-gradient(to bottom right, ${color.color1}, ${color.color2})`;
 
   const handleDownload = async () => {
     if (postState.posts.length === 0) return;
@@ -82,7 +83,7 @@ const Preview = (props: PreviewProps) => {
             <div
               className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md p-4 snap-center instagram-${index} overflow-y-scroll`}
               key={index}
-              style={{ backgroundColor: color, fontFamily }}
+              style={{ background: backgroundColor, fontFamily }}
               id='card-container'
             >
               {postState.posts.length !== 1 && (
