@@ -1,5 +1,6 @@
 import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
+import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
 import { InfinitySpin } from 'react-loader-spinner';
 // import FontPicker from 'react-fontpicker-ts';
@@ -9,18 +10,15 @@ import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
 import FontPicker from './FontPicker';
 
-type User = {
-  username: string;
-  avatar: string;
-};
+import { User, ColorType } from '../types';
 
 type optionsType = {
   setPostURL: Dispatch<SetStateAction<string>>;
   setPostUser: Dispatch<SetStateAction<User>>;
   setFontFamily: Dispatch<SetStateAction<string>>;
   colorState: {
-    color: string;
-    setColor: Dispatch<SetStateAction<string>>;
+    color: ColorType;
+    setColor: Dispatch<SetStateAction<ColorType>>;
   };
   postState: {
     posts: any[];
@@ -43,7 +41,11 @@ const Options = (props: optionsType) => {
   } = props;
 
   const [urlLoading, seturlLoading] = useState(false);
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [isPickerOpen, setIsPickerOpen] = useState({
+    color1: false,
+    color2: false,
+  });
+  const [addColor, setAddColor] = useState(false);
 
   const [value, setValue] = useState(postState.posts.length);
 
@@ -56,12 +58,15 @@ const Options = (props: optionsType) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
+      const isClickOutsideColorPicker =
         colorPickerRef.current &&
-        !colorPickerRef.current.contains(event.target) &&
-        isPickerOpen
+        !colorPickerRef.current.contains(event.target);
+
+      if (
+        isClickOutsideColorPicker &&
+        (isPickerOpen.color1 || isPickerOpen.color2)
       ) {
-        setIsPickerOpen(false);
+        setIsPickerOpen({ color1: false, color2: false });
       }
     };
 
@@ -75,6 +80,10 @@ const Options = (props: optionsType) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isPickerOpen]);
+
+  useEffect(() => {
+    !addColor && colorState.setColor({ ...colorState.color, color2: '' });
+  }, [addColor]);
 
   const handleOnClick = async () => {
     if (urlRef.current === null) return;
@@ -95,6 +104,10 @@ const Options = (props: optionsType) => {
 
     setPostUser({ username, avatar });
     seturlLoading(false);
+  };
+
+  const handleAddCoor = () => {
+    setAddColor(!addColor);
   };
 
   return (
@@ -125,22 +138,73 @@ const Options = (props: optionsType) => {
             {/* Color */}
             <div className='flex gap-2 items-center'>
               <p className='text-fxs'>Change Color: </p>
-              <div
-                className='h-8 w-8 rounded-md cursor-pointer'
-                style={{ backgroundColor: colorState.color }}
-                onClick={() => setIsPickerOpen(!isPickerOpen)}
-              />
-              {isPickerOpen && (
-                <span
-                  className='absolute top-20 left-[30%]'
-                  ref={colorPickerRef}
-                >
-                  <ColorPicker
-                    color={colorState.color}
-                    onChange={(color) => colorState.setColor(color.hex)}
+              <div className='flex gap-1'>
+                <span>
+                  <div
+                    className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                    style={{
+                      backgroundColor: colorState.color.color1,
+                    }}
+                    onClick={() =>
+                      setIsPickerOpen({
+                        ...isPickerOpen,
+                        color1: !isPickerOpen.color1,
+                      })
+                    }
                   />
+                  {isPickerOpen.color1 && (
+                    <span
+                      className='absolute top-20 left-[30%]'
+                      ref={colorPickerRef}
+                    >
+                      <ColorPicker
+                        color={colorState.color.color1}
+                        onChange={(color) =>
+                          colorState.setColor({
+                            ...colorState.color,
+                            color1: color.hex,
+                          })
+                        }
+                      />
+                    </span>
+                  )}
                 </span>
-              )}
+                {addColor && (
+                  <span>
+                    <div
+                      className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                      style={{ backgroundColor: colorState.color.color2 }}
+                      onClick={() =>
+                        setIsPickerOpen({
+                          ...isPickerOpen,
+                          color2: !isPickerOpen.color2,
+                        })
+                      }
+                    />
+                    {isPickerOpen.color2 && (
+                      <span
+                        className='absolute top-20 left-[30%]'
+                        ref={colorPickerRef}
+                      >
+                        <ColorPicker
+                          color={colorState.color.color2}
+                          onChange={(color) =>
+                            colorState.setColor({
+                              ...colorState.color,
+                              color2: color.hex,
+                            })
+                          }
+                        />
+                      </span>
+                    )}
+                  </span>
+                )}
+              </div>
+              <Icon
+                icon={addColor ? 'ic:round-minus' : 'ic:round-plus'}
+                className='h-6 w-6 cursor-pointer'
+                onClick={handleAddCoor}
+              />
             </div>
 
             {/* Number of threads */}
