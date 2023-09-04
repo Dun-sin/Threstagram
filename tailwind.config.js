@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Exo 2', ...defaultTheme.fontFamily.sans],
+        sans: ['"Exo 2"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: '#060b0a',
