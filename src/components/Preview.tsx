@@ -34,6 +34,15 @@ const Preview = (props: PreviewProps) => {
     setDownloadLoading(true);
 
     const data = await elementToImage(postState.posts.length);
+
+    if (data.length === 1) {
+      const link = document.createElement('a');
+      link.download = `instagram-0.png`;
+      link.href = data[0];
+      link.click();
+      setDownloadLoading(false);
+      return;
+    }
     const promises = data.map((url, index) => {
       return fetch(url)
         .then((response) => response.blob())
