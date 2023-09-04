@@ -1,5 +1,7 @@
-import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { DefaultSeo } from 'next-seo';
+
+import SEO from '../../next-seo.config';
 
 import '../styles/index.css';
 import AllProivders from '../AllProviders';
@@ -7,10 +9,7 @@ import AllProivders from '../AllProviders';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Threstagram: Threads to Images</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
+      <DefaultSeo {...SEO} />
       <AllProivders>
         <Component {...pageProps} />
       </AllProivders>
