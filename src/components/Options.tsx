@@ -2,7 +2,7 @@ import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
-import { InfinitySpin } from 'react-loader-spinner';
+import { PongSpinner } from 'react-spinners-kit';
 // import FontPicker from 'react-fontpicker-ts';
 // import 'react-fontpicker-ts/dist/index.css';
 
@@ -121,15 +121,15 @@ const Options = (props: optionsType) => {
             className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
           />
           {urlLoading ? (
-            <span className='w-[20%] bg-brand flex items-center justify-center h-12'>
-              <InfinitySpin width='50' color='#ffff' />
+            <span className='w-[20%] bg-brand flex items-center justify-center h-12 rounded-tr-md'>
+              <PongSpinner size={30} color='#fff' loading={urlLoading} />
             </span>
           ) : (
             <button
               onClick={handleOnClick}
-              className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%]'
+              className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%] flex justify-center items-center'
             >
-              Submit
+              <span>Submit</span>
             </button>
           )}
         </div>
