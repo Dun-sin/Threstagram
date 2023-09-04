@@ -4,32 +4,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-	--step--2: clamp(0.78rem, calc(0.77rem + 0.03vw), 0.8rem);
-	--step--1: clamp(0.94rem, calc(0.92rem + 0.11vw), 1rem);
-	--step-0: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
-	--step-1: clamp(1.35rem, calc(1.28rem + 0.37vw), 1.56rem);
-	--step-2: clamp(1.62rem, calc(1.5rem + 0.58vw), 1.95rem);
-	--step-3: clamp(1.94rem, calc(1.77rem + 0.87vw), 2.44rem);
-	--step-4: clamp(2.33rem, calc(2.08rem + 1.25vw), 3.05rem);
-	--step-5: clamp(2.8rem, calc(2.45rem + 1.77vw), 3.82rem);
+  --step--2: clamp(0.78rem, calc(0.77rem + 0.03vw), 0.8rem);
+  --step--1: clamp(0.94rem, calc(0.92rem + 0.11vw), 1rem);
+  --step-0: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+  --step-1: clamp(1.35rem, calc(1.28rem + 0.37vw), 1.56rem);
+  --step-2: clamp(1.62rem, calc(1.5rem + 0.58vw), 1.95rem);
+  --step-3: clamp(1.94rem, calc(1.77rem + 0.87vw), 2.44rem);
+  --step-4: clamp(2.33rem, calc(2.08rem + 1.25vw), 3.05rem);
+  --step-5: clamp(2.8rem, calc(2.45rem + 1.77vw), 3.82rem);
 }
 
 * {
-	-webkit-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
 }
 
-body {
-	font-family: 'Exo 2', serif, system-ui, -apple-system, BlinkMacSystemFont,
-		'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-		sans-serif;
-}
 .fontpicker__search,
 .fontpicker__preview {
-	color: #060b0a !important;
-	background-color: #f9ffff !important;
+  color: #060b0a !important;
+  background-color: #f9ffff !important;
 }
 
 .fontpicker__preview {
-	background-color: #f9ffff !important;
-	color: #060b0a !important;
+  background-color: #f9ffff !important;
+  color: #060b0a !important;
 }
