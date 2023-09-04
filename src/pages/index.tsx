@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 // libraries
 import { NextSeo } from 'next-seo';
-import { InfinitySpin } from 'react-loader-spinner';
+import { PongSpinner } from 'react-spinners-kit';
 
 // components
 import Social from '../components/Social';
@@ -67,36 +67,38 @@ export default function Home() {
           ],
         }}
       />
-      <section className='bg-primary text-secondary flex items-center flex-col justify-center h-screen w-screen gap-4 relative'>
+      <section className='bg-primary text-secondary flex items-center flex-col justify-center md:h-screen min-h-screen w-screen gap-10 pt-5 pb-10'>
         <Social />
-        <h1 className='text-flg font-bold text-center'>
-          Convert Your Threads Post To Images
-        </h1>
-        {/* Input */}
-        <Options
-          setPostURL={setPostURL}
-          setPostUser={setPostUser}
-          setFontFamily={setFontFamily}
-          colorState={{ color, setColor }}
-          postState={{ posts: postContent, setPostContent }}
-          errorState={{ error, setError }}
-        />
+        <main className='flex items-center w-full flex-col justify-center gap-4'>
+          <h1 className='md:text-flg text-fmd font-bold text-center'>
+            Convert Your Threads Post To Images
+          </h1>
+          {/* Input */}
+          <Options
+            setPostURL={setPostURL}
+            setPostUser={setPostUser}
+            setFontFamily={setFontFamily}
+            colorState={{ color, setColor }}
+            postState={{ posts: postContent, setPostContent }}
+            errorState={{ error, setError }}
+          />
 
-        {contentLoading ? (
-          <span className='flex items-center justify-center w-4/5 max-w-[850px]'>
-            <InfinitySpin width='150' color='#ffff' />
-          </span>
-        ) : (
-          // Display Content
-          !(postContent.length === 0) && (
-            <Preview
-              postState={{ posts: postContent, setPostContent }}
-              color={color}
-              postUser={postUser}
-              fontFamily={fontFamily}
-            />
-          )
-        )}
+          {contentLoading ? (
+            <span className='flex items-center justify-center w-4/5 max-w-[850px]'>
+              <PongSpinner size={110} color='#fff' loading={contentLoading} />
+            </span>
+          ) : (
+            // Display Content
+            !(postContent.length === 0) && (
+              <Preview
+                postState={{ posts: postContent, setPostContent }}
+                color={color}
+                postUser={postUser}
+                fontFamily={fontFamily}
+              />
+            )
+          )}
+        </main>
       </section>
     </>
   );

@@ -18,8 +18,8 @@
     "next-seo": "^6.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-loader-spinner": "^5.4.5",
     "react-pick-color": "^2.0.0",
+    "react-spinners-kit": "^1.9.1",
     "threads-api": "^1.6.3"
   },
   "devDependencies": {

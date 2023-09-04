@@ -1,6 +1,6 @@
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
-import { InfinitySpin } from 'react-loader-spinner';
+import { PongSpinner } from 'react-spinners-kit';
 import ContentEditable from 'react-contenteditable';
 import sanitizeHtml from 'sanitize-html';
 import Image from 'next/image';
@@ -126,7 +126,7 @@ const Preview = (props: PreviewProps) => {
       >
         {downloadLoading ? (
           <span className='flex items-center justify-center w-full'>
-            <InfinitySpin width='100' color='#ffff' />
+            <PongSpinner size={50} color='#fff' loading={downloadLoading} />
           </span>
         ) : (
           <>Download</>
