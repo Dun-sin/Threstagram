@@ -14,17 +14,13 @@ import { getPostContent } from '../utils/api';
 import Options from '../components/Options';
 import Preview from '../components/Preview';
 
-import { ColorType } from '../types';
-
 // context
 import { useUser } from '../context/UserContext';
 import { useContent } from '../context/ContentContext';
-import { useOptions } from '../context/OptionsContext';
 
 export default function Home() {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
-  const { optionsState, dispatchOptions } = useOptions();
 
   const [postURL, setPostURL] = useState('');
 
@@ -63,7 +59,7 @@ export default function Home() {
         }}
       />
 
-      <section className='bg-primary text-secondary flex items-center flex-col justify-center md:h-screen min-h-screen w-screen gap-10 pt-5 pb-10'>
+      <section className='bg-primary text-secondary flex items-center flex-col justify-center md:h-screen min-h-screen w-screen gap-10 pt-5 pb-10 font-sans'>
         <Social />
         <main className='flex items-center w-full flex-col justify-center gap-4'>
           <h1 className='md:text-flg text-fmd font-bold text-center'>

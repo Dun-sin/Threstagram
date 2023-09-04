@@ -8,7 +8,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('debugging production', req.method);
   if (req.method === 'GET') {
     const username = req.query.username as string;
 
