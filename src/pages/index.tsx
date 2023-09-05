@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 
 // libraries
-import { NextSeo } from 'next-seo';
 import { PongSpinner } from 'react-spinners-kit';
 
 // components
@@ -50,10 +49,10 @@ export default function Home() {
         }}
       />
 
-      <header className='flex items-center justify-end w-full backdrop-blur-[80px] pt-5'>
+      <header className='flex items-center justify-end w-full bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 pt-5'>
         <Social />
       </header>
-      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll backdrop-blur-[90px] pb-10'>
+      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10  pb-10'>
         <h1 className='md:text-flg text-fmd font-bold text-center'>
           Convert Your Threads Post To Images
         </h1>

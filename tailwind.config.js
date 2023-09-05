@@ -12,7 +12,7 @@ module.exports = {
       colors: {
         primary: '#060b0a',
         secondary: '#f9ffff',
-        brand: '#ff4847',
+        brand: '#1a8fbb',
       },
       fontSize: {
         f2xs: 'var(--step--2)',

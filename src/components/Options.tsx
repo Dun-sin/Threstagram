@@ -4,19 +4,21 @@ import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
 import { PongSpinner } from 'react-spinners-kit';
 
+import FontPicker from './FontPicker';
+import Themes from '../components/Themes';
+
 import { extractUserName } from '../utils/helper';
 import { getUserProfile } from '../utils/api';
-import FontPicker from './FontPicker';
 
 import { useContent } from '../context/ContentContext';
 import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
 
-type optionsType = {
+type OptionsTypeProps = {
   setPostURL: Dispatch<SetStateAction<string>>;
 };
 
-const Options = (props: optionsType) => {
+const Options = (props: OptionsTypeProps) => {
   const { setPostURL } = props;
 
   const { contentState, dispatchContent } = useContent();
@@ -105,8 +107,8 @@ const Options = (props: optionsType) => {
   };
 
   return (
-    <header className='w-full flex items-center justify-center flex-col relative'>
-      <div className='w-4/5 max-w-[850px]'>
+    <header className='w-full flex items-center justify-center flex-col relative max-h-full z-10'>
+      <div className='w-4/5 max-w-[850px] h-full'>
         <div className='flex items-center justify-center w-full'>
           <input
             type='text'
@@ -128,9 +130,9 @@ const Options = (props: optionsType) => {
           )}
         </div>
         {contentState.postContent.length !== 0 && (
-          <section className='w-ful flex gap-4 justify-center relative select-none'>
+          <section className='w-full flex gap-4 justify-center relative select-none h-full'>
             <div
-              className='flex items-center py-2 cursor-pointer'
+              className='flex items-center py-2 h-fit cursor-pointer'
               onClick={handleDropDown}
             >
               <p>Open Options</p>
@@ -151,63 +153,36 @@ const Options = (props: optionsType) => {
                     className='h-6 w-6 text-brand flex items-center'
                   />
                 </div>
-                <span className='flex gap-4 flex-wrap justify-center md:justify-evenly w-full z-30 text-primary p-2'>
-                  {/* Color */}
-                  <div className='flex gap-2 items-center'>
-                    <p className='text-fxs'>Change Color: </p>
-                    <div className='flex gap-1'>
-                      <span>
-                        <div
-                          className='h-8 w-8 rounded-md cursor-pointer border border-black'
-                          style={{
-                            backgroundColor: color.color1,
-                          }}
-                          onClick={() =>
-                            setIsPickerOpen({
-                              ...isPickerOpen,
-                              color1: !isPickerOpen.color1,
-                            })
-                          }
-                        />
-                        {isPickerOpen.color1 && (
-                          <span
-                            className='absolute top-20 left-[30%]'
-                            ref={colorPickerRef}
-                          >
-                            <ColorPicker
-                              color={color.color1}
-                              onChange={(color) =>
-                                dispatchOptions({
-                                  type: 'SET_COLOR1',
-                                  payload: color.hex,
-                                })
-                              }
-                            />
-                          </span>
-                        )}
-                      </span>
-                      {addColor && (
+                <div className='flex flex-col gap-5 text-primary p-6'>
+                  <span className='flex gap-4 flex-wrap justify-center md:justify-between w-full z-30'>
+                    {/* Color */}
+
+                    <div className='flex gap-2 items-center'>
+                      <p className='text-fxs'>Change Color: </p>
+                      <div className='flex gap-1'>
                         <span>
                           <div
                             className='h-8 w-8 rounded-md cursor-pointer border border-black'
-                            style={{ backgroundColor: color.color2 }}
+                            style={{
+                              backgroundColor: color.color1,
+                            }}
                             onClick={() =>
                               setIsPickerOpen({
                                 ...isPickerOpen,
-                                color2: !isPickerOpen.color2,
+                                color1: !isPickerOpen.color1,
                               })
                             }
                           />
-                          {isPickerOpen.color2 && (
+                          {isPickerOpen.color1 && (
                             <span
                               className='absolute top-20 left-[30%]'
                               ref={colorPickerRef}
                             >
                               <ColorPicker
-                                color={color.color2}
+                                color={color.color1}
                                 onChange={(color) =>
                                   dispatchOptions({
-                                    type: 'SET_COLOR2',
+                                    type: 'SET_COLOR1',
                                     payload: color.hex,
                                   })
                                 }
@@ -215,50 +190,81 @@ const Options = (props: optionsType) => {
                             </span>
                           )}
                         </span>
-                      )}
-                    </div>
-                    <Icon
-                      icon={addColor ? 'ic:round-minus' : 'ic:round-plus'}
-                      className='h-6 w-6 cursor-pointer'
-                      onClick={handleAddCoor}
-                    />
-                  </div>
-
-                  {/* Number of threads */}
-                  <div className='flex gap-2 items-center'>
-                    <p>Number of Threads: </p>
-                    <div>
-                      <select
-                        className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-                        defaultValue={contentState.postContent.length}
-                        onChange={(event) =>
-                          setValue(Number(event.target.value))
-                        }
-                      >
-                        {numbers(contentState.postContent.length).map(
-                          (value) => (
-                            <option value={value} key={value}>
-                              {value}
-                            </option>
-                          )
+                        {addColor && (
+                          <span>
+                            <div
+                              className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                              style={{ backgroundColor: color.color2 }}
+                              onClick={() =>
+                                setIsPickerOpen({
+                                  ...isPickerOpen,
+                                  color2: !isPickerOpen.color2,
+                                })
+                              }
+                            />
+                            {isPickerOpen.color2 && (
+                              <span
+                                className='absolute top-20 left-[30%]'
+                                ref={colorPickerRef}
+                              >
+                                <ColorPicker
+                                  color={color.color2}
+                                  onChange={(color) =>
+                                    dispatchOptions({
+                                      type: 'SET_COLOR2',
+                                      payload: color.hex,
+                                    })
+                                  }
+                                />
+                              </span>
+                            )}
+                          </span>
                         )}
-                      </select>
+                      </div>
+                      <Icon
+                        icon={addColor ? 'ic:round-minus' : 'ic:round-plus'}
+                        className='h-6 w-6 cursor-pointer'
+                        onClick={handleAddCoor}
+                      />
                     </div>
-                  </div>
 
-                  {/* Custom Font */}
-                  <div className='flex gap-2 items-center'>
-                    <p>Custom Font: </p>
-                    <FontPicker
-                      onChange={(value) =>
-                        dispatchOptions({
-                          type: 'SET_FONTFAMILY',
-                          payload: value,
-                        })
-                      }
-                    />
-                  </div>
-                </span>
+                    {/* Number of threads */}
+                    <div className='flex gap-2 items-center'>
+                      <p>Number of Threads: </p>
+                      <div>
+                        <select
+                          className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
+                          defaultValue={contentState.postContent.length}
+                          onChange={(event) =>
+                            setValue(Number(event.target.value))
+                          }
+                        >
+                          {numbers(contentState.postContent.length).map(
+                            (value) => (
+                              <option value={value} key={value}>
+                                {value}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Custom Font */}
+                    <div className='flex gap-2 items-center'>
+                      <p>Custom Font: </p>
+                      <FontPicker
+                        onChange={(value) =>
+                          dispatchOptions({
+                            type: 'SET_FONTFAMILY',
+                            payload: value,
+                          })
+                        }
+                      />
+                    </div>
+                  </span>
+                  <Themes />
+                </div>
               </div>
             )}
           </section>
