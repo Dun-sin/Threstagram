@@ -86,13 +86,13 @@ const Preview = () => {
         {contentState.postContent.map((content: string, index: number) => {
           return (
             <div
-              className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col rounded-md px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
+              className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
               key={index}
               style={{ background: backgroundColor, fontFamily }}
               id='card-container'
             >
               {contentState.postContent.length !== 1 && (
-                <div className='text-fmd font-semibold border-b w-full border-secondary border-spacing-5 h-[10%]'>
+                <div className='text-fmd font-semibold w-full h-[10%]'>
                   {index}
                 </div>
               )}
@@ -112,7 +112,7 @@ const Preview = () => {
                 html={content}
               />
 
-              <div className='flex gap-1 items-center border-t border-secondary border-spacing-5 h-[10%]'>
+              <div className='flex gap-1 items-center h-[10%]'>
                 <span className='h-full flex items-center'>
                   <div className='h-7 w-7 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
                     <Image

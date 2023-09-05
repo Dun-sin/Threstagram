@@ -41,9 +41,19 @@ export default function Home() {
   }, [userState]);
 
   return (
-    <section className='bg-primary text-secondary flex items-center flex-col justify-center md:h-screen min-h-screen w-screen gap-10 pt-5 pb-10 font-sans'>
-      <Social />
-      <main className='flex items-center w-full flex-col justify-center gap-4'>
+    <section className='bg-primary text-secondary flex items-center flex-col justify-between h-screen w-screen font-sans sm:gap-0 gap-12 relative'>
+      <div
+        className='absolute h-screen w-screen bg-repeat-x'
+        style={{
+          backgroundImage:
+            "url('https://e0.pxfuel.com/wallpapers/487/755/desktop-wallpaper-black-and-blue-black-blue-backgrounds-new.jpg')",
+        }}
+      />
+
+      <header className='flex items-center justify-end w-full backdrop-blur-[80px] pt-5'>
+        <Social />
+      </header>
+      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll backdrop-blur-[90px] pb-10'>
         <h1 className='md:text-flg text-fmd font-bold text-center'>
           Convert Your Threads Post To Images
         </h1>
