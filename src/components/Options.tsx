@@ -26,6 +26,7 @@ const Options = (props: optionsType) => {
   const { color } = optionsState;
 
   const [urlLoading, seturlLoading] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState({
     color1: false,
     color2: false,
@@ -99,6 +100,10 @@ const Options = (props: optionsType) => {
     setAddColor(!addColor);
   };
 
+  const handleDropDown = () => {
+    setIsOptionsOpen(!isOptionsOpen);
+  };
+
   return (
     <header className='w-full flex items-center justify-center flex-col relative'>
       <div className='w-4/5 max-w-[850px]'>
@@ -123,106 +128,140 @@ const Options = (props: optionsType) => {
           )}
         </div>
         {contentState.postContent.length !== 0 && (
-          <div className='w-full flex-wrap bg-secondary p-2 text-primary rounded-bl-md rounded-br-md flex gap-4 justify-center'>
-            {/* Color */}
-            <div className='flex gap-2 items-center'>
-              <p className='text-fxs'>Change Color: </p>
-              <div className='flex gap-1'>
-                <span>
-                  <div
-                    className='h-8 w-8 rounded-md cursor-pointer border border-black'
-                    style={{
-                      backgroundColor: color.color1,
-                    }}
-                    onClick={() =>
-                      setIsPickerOpen({
-                        ...isPickerOpen,
-                        color1: !isPickerOpen.color1,
-                      })
-                    }
+          <section className='w-ful flex gap-4 justify-center relative select-none'>
+            <div
+              className='flex items-center py-2 cursor-pointer'
+              onClick={handleDropDown}
+            >
+              <p>Open Options</p>
+              <Icon
+                icon='mingcute:down-fill'
+                className='h-6 w-6 text-brand flex items-center'
+              />
+            </div>
+            {isOptionsOpen && (
+              <div className='absolute w-full bg-secondary rounded-bl-md rounded-br-md'>
+                <div
+                  className='flex items-center py-2 w-full justify-center cursor-pointer'
+                  onClick={handleDropDown}
+                >
+                  <p className='text-primary'>Close Options</p>
+                  <Icon
+                    icon='mingcute:up-fill'
+                    className='h-6 w-6 text-brand flex items-center'
                   />
-                  {isPickerOpen.color1 && (
-                    <span
-                      className='absolute top-20 left-[30%]'
-                      ref={colorPickerRef}
-                    >
-                      <ColorPicker
-                        color={color.color1}
-                        onChange={(color) =>
-                          dispatchOptions({
-                            type: 'SET_COLOR1',
-                            payload: color.hex,
-                          })
-                        }
-                      />
-                    </span>
-                  )}
-                </span>
-                {addColor && (
-                  <span>
-                    <div
-                      className='h-8 w-8 rounded-md cursor-pointer border border-black'
-                      style={{ backgroundColor: color.color2 }}
-                      onClick={() =>
-                        setIsPickerOpen({
-                          ...isPickerOpen,
-                          color2: !isPickerOpen.color2,
-                        })
-                      }
-                    />
-                    {isPickerOpen.color2 && (
-                      <span
-                        className='absolute top-20 left-[30%]'
-                        ref={colorPickerRef}
-                      >
-                        <ColorPicker
-                          color={color.color2}
-                          onChange={(color) =>
-                            dispatchOptions({
-                              type: 'SET_COLOR2',
-                              payload: color.hex,
+                </div>
+                <span className='flex gap-4 flex-wrap justify-center md:justify-evenly w-full z-30 text-primary p-2'>
+                  {/* Color */}
+                  <div className='flex gap-2 items-center'>
+                    <p className='text-fxs'>Change Color: </p>
+                    <div className='flex gap-1'>
+                      <span>
+                        <div
+                          className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                          style={{
+                            backgroundColor: color.color1,
+                          }}
+                          onClick={() =>
+                            setIsPickerOpen({
+                              ...isPickerOpen,
+                              color1: !isPickerOpen.color1,
                             })
                           }
                         />
+                        {isPickerOpen.color1 && (
+                          <span
+                            className='absolute top-20 left-[30%]'
+                            ref={colorPickerRef}
+                          >
+                            <ColorPicker
+                              color={color.color1}
+                              onChange={(color) =>
+                                dispatchOptions({
+                                  type: 'SET_COLOR1',
+                                  payload: color.hex,
+                                })
+                              }
+                            />
+                          </span>
+                        )}
                       </span>
-                    )}
-                  </span>
-                )}
-              </div>
-              <Icon
-                icon={addColor ? 'ic:round-minus' : 'ic:round-plus'}
-                className='h-6 w-6 cursor-pointer'
-                onClick={handleAddCoor}
-              />
-            </div>
+                      {addColor && (
+                        <span>
+                          <div
+                            className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                            style={{ backgroundColor: color.color2 }}
+                            onClick={() =>
+                              setIsPickerOpen({
+                                ...isPickerOpen,
+                                color2: !isPickerOpen.color2,
+                              })
+                            }
+                          />
+                          {isPickerOpen.color2 && (
+                            <span
+                              className='absolute top-20 left-[30%]'
+                              ref={colorPickerRef}
+                            >
+                              <ColorPicker
+                                color={color.color2}
+                                onChange={(color) =>
+                                  dispatchOptions({
+                                    type: 'SET_COLOR2',
+                                    payload: color.hex,
+                                  })
+                                }
+                              />
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                    <Icon
+                      icon={addColor ? 'ic:round-minus' : 'ic:round-plus'}
+                      className='h-6 w-6 cursor-pointer'
+                      onClick={handleAddCoor}
+                    />
+                  </div>
 
-            {/* Number of threads */}
-            <div className='flex gap-2 items-center'>
-              <p>Number of Threads: </p>
-              <div>
-                <select
-                  className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-                  defaultValue={contentState.postContent.length}
-                  onChange={(event) => setValue(Number(event.target.value))}
-                >
-                  {numbers(contentState.postContent.length).map((value) => (
-                    <option value={value} key={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+                  {/* Number of threads */}
+                  <div className='flex gap-2 items-center'>
+                    <p>Number of Threads: </p>
+                    <div>
+                      <select
+                        className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
+                        defaultValue={contentState.postContent.length}
+                        onChange={(event) =>
+                          setValue(Number(event.target.value))
+                        }
+                      >
+                        {numbers(contentState.postContent.length).map(
+                          (value) => (
+                            <option value={value} key={value}>
+                              {value}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </div>
+                  </div>
 
-            <div className='flex gap-2 items-center'>
-              <p>Custom Font: </p>
-              <FontPicker
-                onChange={(value) =>
-                  dispatchOptions({ type: 'SET_FONTFAMILY', payload: value })
-                }
-              />
-            </div>
-          </div>
+                  {/* Custom Font */}
+                  <div className='flex gap-2 items-center'>
+                    <p>Custom Font: </p>
+                    <FontPicker
+                      onChange={(value) =>
+                        dispatchOptions({
+                          type: 'SET_FONTFAMILY',
+                          payload: value,
+                        })
+                      }
+                    />
+                  </div>
+                </span>
+              </div>
+            )}
+          </section>
         )}
       </div>
       <p className='text-red-600 text-fsm text-center'>{contentState.error}</p>
