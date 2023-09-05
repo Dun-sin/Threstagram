@@ -4,14 +4,12 @@ import { PongSpinner } from 'react-spinners-kit';
 
 import { elementToImage } from '../utils/helper';
 import { useContent } from '../context/ContentContext';
-import { pickLightTheme } from './Themes/LightDesign';
-import { useThemes } from '../context/ThemesContext';
+import DisplayTheme from './Themes/DisplayTheme';
 
 const zip = require('jszip')();
 
 const Preview = () => {
   const { contentState } = useContent();
-  const { themesState } = useThemes();
 
   const [downloadLoading, setDownloadLoading] = useState(false);
 
@@ -61,9 +59,9 @@ const Preview = () => {
           contentState.postContent.length === 1 && 'justify-center'
         }`}
       >
-        {contentState.postContent.map((content: string, index: number) => {
-          return pickLightTheme(themesState, content, index);
-        })}
+        {contentState.postContent.map((content: string, index: number) => (
+          <DisplayTheme content={content} index={index} key={index} />
+        ))}
       </section>
       <button
         className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'

@@ -1,8 +1,11 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ThemesReducer, initalThemesState } from '../reducers/ThemesReducer';
+import { ThemesReducer, initialThemesState } from '../reducers/ThemesReducer';
 
 type ThemesContextType = {
-  themesState: string;
+  themesState: {
+    theme: 'dark' | 'light';
+    themeName: string;
+  };
   dispatchThemes: React.Dispatch<any>;
 };
 
@@ -20,7 +23,7 @@ export const useThemes = () => {
 export const ThemesProvider = ({ children }) => {
   const [themesState, dispatchThemes] = useReducer(
     ThemesReducer,
-    initalThemesState
+    initialThemesState
   );
 
   const contextValue: ThemesContextType = {

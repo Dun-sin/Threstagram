@@ -7,11 +7,11 @@ import { useUser } from '../../context/UserContext';
 import { useOptions } from '../../context/OptionsContext';
 import { useContent } from '../../context/ContentContext';
 
-type DefaultLightProps = {
+type lightProps = {
   content: string;
   index: number;
 };
-function DefaultLight({ content, index }: DefaultLightProps) {
+export function DefaultLight({ content, index }: lightProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
@@ -80,21 +80,3 @@ function DefaultLight({ content, index }: DefaultLightProps) {
     </div>
   );
 }
-
-export const pickLightTheme = (
-  name: string = 'defaultLight',
-  content: string,
-  index: number
-) => {
-  let theme: any;
-  switch (name) {
-    case 'defaultLight':
-      theme = <DefaultLight content={content} index={index} />;
-      break;
-
-    default:
-      break;
-  }
-
-  return theme;
-};

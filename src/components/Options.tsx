@@ -107,7 +107,7 @@ const Options = (props: OptionsTypeProps) => {
   };
 
   return (
-    <header className='w-full flex items-center justify-center flex-col relative max-h-full z-10'>
+    <header className='w-full flex items-center justify-center flex-col relative max-h-full z-20'>
       <div className='w-4/5 max-w-[850px] h-full'>
         <div className='flex items-center justify-center w-full'>
           <input
