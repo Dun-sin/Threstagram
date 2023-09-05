@@ -7,7 +7,7 @@ export type OptionsType = {
 
 export const initalOptionsState: OptionsType = {
   color: {
-    color1: '#ff4847',
+    color1: '#1a8fbb',
     color2: '',
   },
   fontFamily: 'Exo2',
