@@ -25,6 +25,7 @@ Before installation, please make sure you have already installed the following t
 ## 👌🏾 What you have to do to contribute
 - [Follow the installation Steps](#%EF%B8%-installation-steps)
 - [Follow the contributing Steps](#-after-making-a-change)
+- [How to add themes](/CONTRIBUTING.md#how-to-add-a-theme)
 
 ## 🛠️ Installation Steps
 
