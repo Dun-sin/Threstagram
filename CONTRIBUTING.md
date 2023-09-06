@@ -108,6 +108,13 @@ git push origin YourBranchName
 
 ---
 
+## How to add a theme
+- create an issue with an image of the theme, don't add the theme unless you are assigned to the issue
+- add the theme in it's respective theme file, if it's a light theme add to the `lightDesign.tsx` and export it but not default
+- use a number to name the theme e.g `light-1`, if `light-1` already exists go with the next number `light-2` etc
+- code the preview in `themes/index.tsx`, copy it and adjust to how it should look in the respective design type eg the `lightDesign.tsx` file
+- call it in the switch statement in `DisplayTheme.tsx`
+
 ## 💥 Issues
 
 In order to discuss changes, you are welcome to [open an issue](https://github.com/Dun-sin/Threstagram/issues/new/choose) about what you would like to contribute. Enhancements are always encouraged and appreciated.
