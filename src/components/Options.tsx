@@ -13,6 +13,7 @@ import { getUserProfile } from '../utils/api';
 import { useContent } from '../context/ContentContext';
 import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
+import { useThemes } from '../context/ThemesContext';
 
 type OptionsTypeProps = {
   setPostURL: Dispatch<SetStateAction<string>>;
@@ -22,8 +23,9 @@ const Options = (props: OptionsTypeProps) => {
   const { setPostURL } = props;
 
   const { contentState, dispatchContent } = useContent();
-  const { dispatchUser } = useUser();
   const { optionsState, dispatchOptions } = useOptions();
+  const { themesState, dispatchThemes } = useThemes();
+  const { dispatchUser } = useUser();
 
   const { color } = optionsState;
 

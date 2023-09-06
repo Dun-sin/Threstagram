@@ -1,16 +1,20 @@
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable';
+// import ReactMarkdown from 'react-markdown';
 
-import { calculateFontSize } from '../../utils/helper';
-import { useUser } from '../../context/UserContext';
-import { useOptions } from '../../context/OptionsContext';
-import { useContent } from '../../context/ContentContext';
+import { calculateFontSize } from '../../../utils/helper';
+import { backgroundColor, onChange, pasteAsPlainText } from '../helper';
+
+import { useUser } from '../../../context/UserContext';
+import { useOptions } from '../../../context/OptionsContext';
+import { useContent } from '../../../context/ContentContext';
 
 type lightProps = {
   content: string;
   index: number;
 };
+
 export function DefaultLight({ content, index }: lightProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
@@ -18,47 +22,31 @@ export function DefaultLight({ content, index }: lightProps) {
 
   const { color, fontFamily } = optionsState;
 
-  const backgroundColor =
-    color.color2 === ''
-      ? color.color1
-      : `linear-gradient(to bottom right, ${color.color1}, ${color.color2})`;
-
-  const onChange = (content?: any, index?: number) => {
-    let newContent = content;
-    const newArray = [...contentState.postContent];
-    if (content.length >= 500) {
-      newContent = content.slice(0, 500);
-      return;
-    }
-    newArray[index] = newContent;
-
-    dispatchContent({ type: 'SET_CONTENT', payload: newArray });
-  };
-
   return (
     <div
       className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
       key={index}
-      style={{ background: backgroundColor, fontFamily }}
+      style={{ background: backgroundColor(color), fontFamily }}
       id='card-container'
     >
       {contentState.postContent.length !== 1 && (
         <div className='text-fmd font-semibold w-full h-[10%]'>{index}</div>
       )}
       <ContentEditable
+        html={content}
+        disabled={false}
+        tagName='p'
+        onChange={null}
+        onBlur={(e) => {
+          const updatedContent = e.currentTarget.innerHTML;
+          onChange(updatedContent, index, contentState, dispatchContent);
+        }}
+        onPaste={pasteAsPlainText}
         className={`h-[80%] flex items-center whitespace-pre-line`}
         style={{
           wordBreak: 'break-word',
           fontSize: calculateFontSize(content),
         }}
-        disabled={false}
-        tagName='p'
-        onBlur={(e) => {
-          const updatedContent = e.currentTarget.innerHTML;
-          onChange(updatedContent, index);
-        }}
-        onChange={null}
-        html={content}
       />
 
       <div className='flex gap-1 items-center h-[10%]'>
