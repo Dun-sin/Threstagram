@@ -58,24 +58,26 @@ export function DefaultDark({ content, index }: darkProps) {
           </span>
         )}
       </div>
-      <ContentEditable
-        className={`h-[80%] whitespace-pre-line text-center`}
-        style={{
-          wordBreak: 'break-word',
-          fontSize: calculateFontSize(content),
-        }}
-        disabled={false}
-        tagName='p'
-        onBlur={(e) => {
-          const updatedContent = e.currentTarget.innerHTML;
-          onChange(updatedContent, index, contentState, dispatchContent);
-        }}
-        onKeyDown={handleKeyDown}
-        ref={contentEditableRef}
-        onPaste={pasteAsPlainText}
-        onChange={null}
-        html={content}
-      />
+      <div className='h-[80%] flex items-center justify-center'>
+        <ContentEditable
+          className={`whitespace-pre-line text-center`}
+          style={{
+            wordBreak: 'break-word',
+            fontSize: calculateFontSize(content),
+          }}
+          disabled={false}
+          tagName='p'
+          onBlur={(e) => {
+            const updatedContent = e.currentTarget.innerHTML;
+            onChange(updatedContent, index, contentState, dispatchContent);
+          }}
+          onKeyDown={handleKeyDown}
+          ref={contentEditableRef}
+          onPaste={pasteAsPlainText}
+          onChange={null}
+          html={content}
+        />
+      </div>
       {contentState.postContent.length !== 1 && (
         <div className='min-h-[10%] w-full flex justify-end'>
           <div className='flex items-center'>
