@@ -1,13 +1,13 @@
-export const initialContentState = {
-  contentLoading: false,
-  postContent: [],
-  error: '',
-};
-
 export type ContentStateType = {
   contentLoading: boolean;
   postContent: any[];
   error: string;
+};
+
+export const initialContentState: ContentStateType = {
+  contentLoading: false,
+  postContent: [],
+  error: '',
 };
 
 export const contentReducer = (state, action) => {

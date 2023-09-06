@@ -8,7 +8,7 @@ export const pasteAsPlainText = (event) => {
   document.execCommand('insertHTML', false, text);
 };
 
-export const onChange = (
+export const handleContentChange = (
   content: any,
   index: number,
   contentState: ContentStateType,

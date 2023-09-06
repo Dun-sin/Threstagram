@@ -20,7 +20,7 @@ export const useOptions = () => {
   const context = useContext(OptionsContext);
 
   if (!context) {
-    throw new Error('useContent must be used within a ContentProvider');
+    throw new Error('useContent must be used within a OptionsProvider');
   }
 
   return context;

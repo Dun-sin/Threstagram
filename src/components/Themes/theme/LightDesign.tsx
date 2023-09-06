@@ -7,7 +7,7 @@ import ContentEditable from 'react-contenteditable';
 import { calculateFontSize } from '../../../utils/helper';
 import {
   backgroundColor,
-  onChange,
+  handleContentChange,
   pasteAsPlainText,
   handleKeyDown,
 } from '../helper';
@@ -17,11 +17,10 @@ import { useOptions } from '../../../context/OptionsContext';
 import { useContent } from '../../../context/ContentContext';
 
 type lightProps = {
-  content: string;
   index: number;
 };
 
-export function DefaultLight({ content, index }: lightProps) {
+export function DefaultLight({ index }: lightProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
@@ -29,6 +28,8 @@ export function DefaultLight({ content, index }: lightProps) {
   const contentEditableRef = useRef(null);
 
   const { color, fontFamily } = optionsState;
+
+  const content = contentState.postContent[index];
 
   return (
     <div
@@ -48,7 +49,12 @@ export function DefaultLight({ content, index }: lightProps) {
           onChange={null}
           onBlur={(e) => {
             const updatedContent = e.currentTarget.innerHTML;
-            onChange(updatedContent, index, contentState, dispatchContent);
+            handleContentChange(
+              updatedContent,
+              index,
+              contentState,
+              dispatchContent
+            );
           }}
           onPaste={pasteAsPlainText}
           className={`whitespace-pre-line`}
