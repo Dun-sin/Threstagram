@@ -1,10 +1,16 @@
+import { useRef } from 'react';
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable';
 import { Icon } from '@iconify/react';
 
 import { calculateFontSize } from '../../../utils/helper';
-import { backgroundColor, onChange, pasteAsPlainText } from '../helper';
+import {
+  backgroundColor,
+  onChange,
+  pasteAsPlainText,
+  handleKeyDown,
+} from '../helper';
 
 import { useUser } from '../../../context/UserContext';
 import { useOptions } from '../../../context/OptionsContext';
@@ -18,6 +24,8 @@ export function DefaultDark({ content, index }: darkProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
+
+  const contentEditableRef = useRef(null);
 
   const { color, fontFamily } = optionsState;
 
@@ -51,7 +59,7 @@ export function DefaultDark({ content, index }: darkProps) {
         )}
       </div>
       <ContentEditable
-        className={`h-[80%] flex items-center whitespace-pre-line text-center`}
+        className={`h-[80%] whitespace-pre-line text-center`}
         style={{
           wordBreak: 'break-word',
           fontSize: calculateFontSize(content),
@@ -62,6 +70,8 @@ export function DefaultDark({ content, index }: darkProps) {
           const updatedContent = e.currentTarget.innerHTML;
           onChange(updatedContent, index, contentState, dispatchContent);
         }}
+        onKeyDown={handleKeyDown}
+        ref={contentEditableRef}
         onPaste={pasteAsPlainText}
         onChange={null}
         html={content}

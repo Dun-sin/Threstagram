@@ -1,10 +1,16 @@
+import { useRef } from 'react';
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable';
 // import ReactMarkdown from 'react-markdown';
 
 import { calculateFontSize } from '../../../utils/helper';
-import { backgroundColor, onChange, pasteAsPlainText } from '../helper';
+import {
+  backgroundColor,
+  onChange,
+  pasteAsPlainText,
+  handleKeyDown,
+} from '../helper';
 
 import { useUser } from '../../../context/UserContext';
 import { useOptions } from '../../../context/OptionsContext';
@@ -20,6 +26,8 @@ export function DefaultLight({ content, index }: lightProps) {
   const { userState } = useUser();
   const { optionsState } = useOptions();
 
+  const contentEditableRef = useRef(null);
+
   const { color, fontFamily } = optionsState;
 
   return (
@@ -32,22 +40,26 @@ export function DefaultLight({ content, index }: lightProps) {
       {contentState.postContent.length !== 1 && (
         <div className='text-fmd font-semibold w-full h-[10%]'>{index}</div>
       )}
-      <ContentEditable
-        html={content}
-        disabled={false}
-        tagName='p'
-        onChange={null}
-        onBlur={(e) => {
-          const updatedContent = e.currentTarget.innerHTML;
-          onChange(updatedContent, index, contentState, dispatchContent);
-        }}
-        onPaste={pasteAsPlainText}
-        className={`h-[80%] flex items-center whitespace-pre-line`}
-        style={{
-          wordBreak: 'break-word',
-          fontSize: calculateFontSize(content),
-        }}
-      />
+      <div className='h-[80%] flex items-center'>
+        <ContentEditable
+          html={content}
+          disabled={false}
+          tagName='p'
+          onChange={null}
+          onBlur={(e) => {
+            const updatedContent = e.currentTarget.innerHTML;
+            onChange(updatedContent, index, contentState, dispatchContent);
+          }}
+          onPaste={pasteAsPlainText}
+          className={`whitespace-pre-line`}
+          style={{
+            wordBreak: 'break-word',
+            fontSize: calculateFontSize(content),
+          }}
+          onKeyDown={handleKeyDown}
+          ref={contentEditableRef}
+        />
+      </div>
 
       <div className='flex gap-1 items-center h-[10%]'>
         <span className='h-full flex items-center'>
