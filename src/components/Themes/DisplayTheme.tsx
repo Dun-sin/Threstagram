@@ -1,6 +1,6 @@
 import { useThemes } from '../../context/ThemesContext';
-import { DefaultLight } from './LightDesign';
-import { DefaultDark } from './DarkDesign';
+import { DefaultLight } from './theme/LightDesign';
+import { DefaultDark } from './theme/DarkDesign';
 
 type DisplayThemeProps = {
   content: string;

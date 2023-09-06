@@ -8,7 +8,7 @@ import { useOptions } from '../../context/OptionsContext';
 
 const Themes = () => {
   const { themesState, dispatchThemes } = useThemes();
-  const { dispatchOptions } = useOptions();
+  const { optionsState, dispatchOptions } = useOptions();
 
   const [theme, setTheme] = useState<'light' | 'dark'>(themesState.theme);
 
@@ -22,24 +22,8 @@ const Themes = () => {
     let position: number;
     if (value === 'dark') {
       position = 0;
-      dispatchThemes({
-        type: 'CHANGE_THEME',
-        payload: {
-          themeName: 'defaultDark',
-          theme: 'dark',
-        },
-      });
-      dispatchOptions({ type: 'SET_COLOR1', payload: '#060b0a' });
     } else if (value === 'light') {
       position = 60;
-      dispatchThemes({
-        type: 'CHANGE_THEME',
-        payload: {
-          themeName: 'defaultLight',
-          theme: 'light',
-        },
-      });
-      dispatchOptions({ type: 'SET_COLOR1', payload: '#1a8fbb' });
     }
     optionRef.current.style.left = position + 'px';
     setTheme(value);
@@ -89,15 +73,16 @@ const Themes = () => {
           {/* Default Light */}
           <div
             className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
-            onClick={() =>
+            onClick={() => {
               dispatchThemes({
                 type: 'CHANGE_THEME',
                 payload: {
                   themeName: 'defaultLight',
                   theme: 'light',
                 },
-              })
-            }
+              });
+              dispatchOptions({ type: 'SET_COLOR1', payload: '#1a8fbb' });
+            }}
           >
             <div
               className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
@@ -140,15 +125,16 @@ const Themes = () => {
           {/* Default Dark */}
           <div
             className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
-            onClick={() =>
+            onClick={() => {
               dispatchThemes({
                 type: 'CHANGE_THEME',
                 payload: {
                   themeName: 'defaultDark',
                   theme: 'dark',
                 },
-              })
-            }
+              });
+              dispatchOptions({ type: 'SET_COLOR1', payload: '#060b0a' });
+            }}
           >
             <div
               className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-primary text-secondary`}
