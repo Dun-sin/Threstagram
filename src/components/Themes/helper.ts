@@ -29,3 +29,27 @@ export const backgroundColor = (color: ColorType) =>
   color.color2 === ''
     ? color.color1
     : `linear-gradient(to bottom right, ${color.color1}, ${color.color2})`;
+
+export const handleKeyDown = (e) => {
+  if (e.ctrlKey) {
+    switch (e.key) {
+      case 'i':
+        // Ctrl+I pressed, make selected text italic
+        document.execCommand('italic', false, null);
+        e.preventDefault();
+        break;
+      case 'b':
+        // Ctrl+B pressed, make selected text bold
+        document.execCommand('bold', false, null);
+        e.preventDefault();
+        break;
+      case 'u':
+        // Ctrl+U pressed, make selected text underlined
+        document.execCommand('underline', false, null);
+        e.preventDefault();
+        break;
+      default:
+        break;
+    }
+  }
+};

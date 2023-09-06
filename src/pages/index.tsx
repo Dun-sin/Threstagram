@@ -53,9 +53,30 @@ export default function Home() {
         <Social />
       </header>
       <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10  pb-10'>
-        <h1 className='md:text-flg text-fmd font-bold text-center'>
-          Convert Your Threads Post To Images
-        </h1>
+        <span className='flex flex-col items-center'>
+          <h1 className='md:text-flg text-fmd font-bold text-center'>
+            Convert Your Threads Post To Images
+          </h1>
+          {contentState.postContent.length !== 0 && (
+            <ul className='flex items-center gap-6 flex-wrap'>
+              <li className='flex items-center gap-2'>
+                <span>CTRL + B</span>
+                <span>-</span>
+                <span>Bold</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <span>CTRL + I</span>
+                <span>-</span>
+                <span>Italic</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <span>CTRL + U</span>
+                <span>-</span>
+                <span>Underline</span>
+              </li>
+            </ul>
+          )}
+        </span>
         {/* Input */}
         <Options setPostURL={setPostURL} />
 

@@ -1,10 +1,16 @@
+import { useRef } from 'react';
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable';
 import { Icon } from '@iconify/react';
 
 import { calculateFontSize } from '../../../utils/helper';
-import { backgroundColor, onChange, pasteAsPlainText } from '../helper';
+import {
+  backgroundColor,
+  onChange,
+  pasteAsPlainText,
+  handleKeyDown,
+} from '../helper';
 
 import { useUser } from '../../../context/UserContext';
 import { useOptions } from '../../../context/OptionsContext';
@@ -18,6 +24,8 @@ export function DefaultDark({ content, index }: darkProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
+
+  const contentEditableRef = useRef(null);
 
   const { color, fontFamily } = optionsState;
 
@@ -50,22 +58,26 @@ export function DefaultDark({ content, index }: darkProps) {
           </span>
         )}
       </div>
-      <ContentEditable
-        className={`h-[80%] flex items-center whitespace-pre-line text-center`}
-        style={{
-          wordBreak: 'break-word',
-          fontSize: calculateFontSize(content),
-        }}
-        disabled={false}
-        tagName='p'
-        onBlur={(e) => {
-          const updatedContent = e.currentTarget.innerHTML;
-          onChange(updatedContent, index, contentState, dispatchContent);
-        }}
-        onPaste={pasteAsPlainText}
-        onChange={null}
-        html={content}
-      />
+      <div className='h-[80%] flex items-center justify-center'>
+        <ContentEditable
+          className={`whitespace-pre-line text-center`}
+          style={{
+            wordBreak: 'break-word',
+            fontSize: calculateFontSize(content),
+          }}
+          disabled={false}
+          tagName='p'
+          onBlur={(e) => {
+            const updatedContent = e.currentTarget.innerHTML;
+            onChange(updatedContent, index, contentState, dispatchContent);
+          }}
+          onKeyDown={handleKeyDown}
+          ref={contentEditableRef}
+          onPaste={pasteAsPlainText}
+          onChange={null}
+          html={content}
+        />
+      </div>
       {contentState.postContent.length !== 1 && (
         <div className='min-h-[10%] w-full flex justify-end'>
           <div className='flex items-center'>
