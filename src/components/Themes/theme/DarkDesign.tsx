@@ -144,7 +144,7 @@ export function DarkOne({ index }: darkProps) {
           html={content}
         />
 
-        {index === 0 && (
+        {index === 0 && contentState.postContent.length !== 1 && (
           <p className='px-2 border border-secondary w-fit rounded-lg text-fxs flex items-center'>
             <span>Swipe</span>
             <Icon
