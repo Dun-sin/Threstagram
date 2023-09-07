@@ -43,12 +43,15 @@ export function DefaultLight({ index }: lightProps) {
       )}
       <div className='h-[80%] flex items-center'>
         <ContentEditable
-          html={content}
+          className={`whitespace-pre-line text-center`}
+          style={{
+            wordBreak: 'break-word',
+            fontSize: calculateFontSize(content),
+          }}
           disabled={false}
           tagName='p'
-          onChange={null}
-          onBlur={(e) => {
-            const updatedContent = e.currentTarget.innerHTML;
+          onChange={(e) => {
+            const updatedContent = e.target.value;
             handleContentChange(
               updatedContent,
               index,
@@ -56,14 +59,10 @@ export function DefaultLight({ index }: lightProps) {
               dispatchContent
             );
           }}
-          onPaste={pasteAsPlainText}
-          className={`whitespace-pre-line`}
-          style={{
-            wordBreak: 'break-word',
-            fontSize: calculateFontSize(content),
-          }}
           onKeyDown={handleKeyDown}
           ref={contentEditableRef}
+          onPaste={pasteAsPlainText}
+          html={content}
         />
       </div>
 

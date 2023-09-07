@@ -67,8 +67,8 @@ export function DefaultDark({ index }: darkProps) {
           }}
           disabled={false}
           tagName='p'
-          onBlur={(e) => {
-            const updatedContent = e.currentTarget.innerHTML;
+          onChange={(e) => {
+            const updatedContent = e.target.value;
             handleContentChange(
               updatedContent,
               index,
@@ -79,7 +79,6 @@ export function DefaultDark({ index }: darkProps) {
           onKeyDown={handleKeyDown}
           ref={contentEditableRef}
           onPaste={pasteAsPlainText}
-          onChange={null}
           html={content}
         />
       </div>

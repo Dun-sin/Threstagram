@@ -18,7 +18,6 @@ export const handleContentChange = (
   const newArray = [...contentState.postContent];
   if (content.length >= 500) {
     newContent = content.slice(0, 500);
-    return;
   }
   newArray[index] = newContent;
 
