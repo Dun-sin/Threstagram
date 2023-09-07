@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import Image from 'next/image';
 
 import ContentEditable from 'react-contenteditable';
-// import ReactMarkdown from 'react-markdown';
 
 import { calculateFontSize } from '../../../utils/helper';
 import {
@@ -43,7 +42,7 @@ export function DefaultLight({ index }: lightProps) {
       )}
       <div className='h-[80%] flex items-center'>
         <ContentEditable
-          className={`whitespace-pre-line text-center`}
+          className={`whitespace-pre-line`}
           style={{
             wordBreak: 'break-word',
             fontSize: calculateFontSize(content),
