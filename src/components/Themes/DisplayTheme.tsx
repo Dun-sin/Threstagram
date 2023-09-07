@@ -1,14 +1,12 @@
 import { useThemes } from '../../context/ThemesContext';
 import { DefaultLight } from './theme/LightDesign';
-import { DefaultDark } from './theme/DarkDesign';
-import { ReactNode } from 'react';
+import { DarkOne, DefaultDark } from './theme/DarkDesign';
 
 type DisplayThemeProps = {
   index: number;
-  children?: ReactNode;
 };
 
-const DisplayTheme = ({ children, index }: DisplayThemeProps) => {
+const DisplayTheme = ({ index }: DisplayThemeProps) => {
   const { themesState } = useThemes();
 
   const switchFunction = () => {
@@ -17,7 +15,8 @@ const DisplayTheme = ({ children, index }: DisplayThemeProps) => {
         return <DefaultLight index={index} />;
       case 'defaultDark':
         return <DefaultDark index={index} />;
-
+      case 'darkOne':
+        return <DarkOne index={index} />;
       default:
         break;
     }

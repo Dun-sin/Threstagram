@@ -8,7 +8,7 @@ import { useOptions } from '../../context/OptionsContext';
 
 const Themes = () => {
   const { themesState, dispatchThemes } = useThemes();
-  const { optionsState, dispatchOptions } = useOptions();
+  const { dispatchOptions } = useOptions();
 
   const [theme, setTheme] = useState<'light' | 'dark'>(themesState.theme);
 
@@ -121,7 +121,7 @@ const Themes = () => {
         </section>
       )}
       {theme === 'dark' && (
-        <section>
+        <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-scroll'>
           {/* Default Dark */}
           <div
             className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
@@ -181,6 +181,49 @@ const Themes = () => {
               </div>
             </div>
             <p className='text-center'>Default Dark</p>
+          </div>
+
+          {/* Dark One */}
+          <div>
+            <div
+              className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
+              onClick={() => {
+                dispatchThemes({
+                  type: 'CHANGE_THEME',
+                  payload: {
+                    themeName: 'darkOne',
+                    theme: 'dark',
+                  },
+                });
+                dispatchOptions({ type: 'SET_COLOR1', payload: '#060b0a' });
+              }}
+            >
+              <div
+                className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-primary text-secondary`}
+                id='card-container'
+              >
+                <div className='flex gap-2 flex-col justify-center h-[90%]'>
+                  <div
+                    className={`flex items-center whitespace-pre-line md:text-sm text-[10px]`}
+                    style={{
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Labore recusandae, iusto name
+                  </div>
+                  <p className='px-2 border border-secondary w-fit rounded-lg text-[8px]'>
+                    <span>Swipe</span>
+                  </p>
+                </div>
+                <div className='flex gap-1 items-center'>
+                  <p className='text-[6px] font-medium text-center h-full flex items-center left-3'>
+                    <span>@Mark_zucky</span>
+                  </p>
+                </div>
+              </div>
+              <p className='text-center'>Dark One</p>
+            </div>
           </div>
         </section>
       )}
