@@ -162,3 +162,4 @@ export function DarkOne({ index }: darkProps) {
     </div>
   );
 }
+// okay
