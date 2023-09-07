@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { PongSpinner } from 'react-spinners-kit';
 
 import { elementToImage } from '../utils/helper';
-import { useContent } from '../context/ContentContext';
 import DisplayTheme from './Themes/DisplayTheme';
+
+// context
+import { useContent } from '../context/ContentContext';
 
 const zip = require('jszip')();
 
@@ -12,6 +14,8 @@ const Preview = () => {
   const { contentState } = useContent();
 
   const [downloadLoading, setDownloadLoading] = useState(false);
+
+  const { postContent } = contentState;
 
   const handleDownload = async () => {
     if (contentState.postContent.length === 0) return;
@@ -56,12 +60,12 @@ const Preview = () => {
     <span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
       <section
         className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
-          contentState.postContent.length === 1 && 'justify-center'
+          postContent.length === 1 && 'justify-center'
         }`}
       >
-        {contentState.postContent.map((content: string, index: number) => (
-          <DisplayTheme content={content} index={index} key={index} />
-        ))}
+        {postContent.map((content: string, index: number) => {
+          return <DisplayTheme index={index} key={index} />;
+        })}
       </section>
       <button
         className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'

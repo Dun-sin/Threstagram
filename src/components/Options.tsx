@@ -13,7 +13,6 @@ import { getUserProfile } from '../utils/api';
 import { useContent } from '../context/ContentContext';
 import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
-import { useThemes } from '../context/ThemesContext';
 
 type OptionsTypeProps = {
   setPostURL: Dispatch<SetStateAction<string>>;
@@ -24,7 +23,6 @@ const Options = (props: OptionsTypeProps) => {
 
   const { contentState, dispatchContent } = useContent();
   const { optionsState, dispatchOptions } = useOptions();
-  const { themesState, dispatchThemes } = useThemes();
   const { dispatchUser } = useUser();
 
   const { color } = optionsState;
@@ -37,17 +35,8 @@ const Options = (props: OptionsTypeProps) => {
   });
   const [addColor, setAddColor] = useState(false);
 
-  const [value, setValue] = useState(contentState.postContent.length);
-
   const urlRef = useRef<HTMLInputElement>(null);
   const colorPickerRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    dispatchContent({
-      type: 'SET_CONTENT',
-      payload: contentState.postContent.slice(0, value),
-    });
-  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -237,9 +226,16 @@ const Options = (props: OptionsTypeProps) => {
                         <select
                           className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
                           defaultValue={contentState.postContent.length}
-                          onChange={(event) =>
-                            setValue(Number(event.target.value))
-                          }
+                          onChange={(event) => {
+                            const eventValue = Number(event.target.value);
+                            dispatchContent({
+                              type: 'SET_CONTENT',
+                              payload: contentState.postContent.slice(
+                                0,
+                                eventValue
+                              ),
+                            });
+                          }}
                         >
                           {numbers(contentState.postContent.length).map(
                             (value) => (

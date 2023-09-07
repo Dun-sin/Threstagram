@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 import { calculateFontSize } from '../../../utils/helper';
 import {
   backgroundColor,
-  onChange,
+  handleContentChange,
   pasteAsPlainText,
   handleKeyDown,
 } from '../helper';
@@ -17,10 +17,9 @@ import { useOptions } from '../../../context/OptionsContext';
 import { useContent } from '../../../context/ContentContext';
 
 type darkProps = {
-  content: string;
   index: number;
 };
-export function DefaultDark({ content, index }: darkProps) {
+export function DefaultDark({ index }: darkProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
@@ -28,6 +27,7 @@ export function DefaultDark({ content, index }: darkProps) {
   const contentEditableRef = useRef(null);
 
   const { color, fontFamily } = optionsState;
+  const content = contentState.postContent[index];
 
   return (
     <div
@@ -67,14 +67,18 @@ export function DefaultDark({ content, index }: darkProps) {
           }}
           disabled={false}
           tagName='p'
-          onBlur={(e) => {
-            const updatedContent = e.currentTarget.innerHTML;
-            onChange(updatedContent, index, contentState, dispatchContent);
+          onChange={(e) => {
+            const updatedContent = e.target.value;
+            handleContentChange(
+              updatedContent,
+              index,
+              contentState,
+              dispatchContent
+            );
           }}
           onKeyDown={handleKeyDown}
           ref={contentEditableRef}
           onPaste={pasteAsPlainText}
-          onChange={null}
           html={content}
         />
       </div>

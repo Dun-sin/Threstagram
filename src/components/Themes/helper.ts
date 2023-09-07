@@ -8,7 +8,7 @@ export const pasteAsPlainText = (event) => {
   document.execCommand('insertHTML', false, text);
 };
 
-export const onChange = (
+export const handleContentChange = (
   content: any,
   index: number,
   contentState: ContentStateType,
@@ -18,7 +18,6 @@ export const onChange = (
   const newArray = [...contentState.postContent];
   if (content.length >= 500) {
     newContent = content.slice(0, 500);
-    return;
   }
   newArray[index] = newContent;
 
