@@ -68,8 +68,12 @@ export const calculateFontSize = (text: string) => {
   } else {
     // Calculate a smaller font size for longer text
     const scaleFactor = maxLength / textLength;
-    let adjustedFontSize = defaultFontSize * scaleFactor;
-    adjustedFontSize <= 0.7 && (adjustedFontSize += 0.2);
-    return `${adjustedFontSize.toFixed(1)}rem`;
+    let adjustedFontSize = Number((defaultFontSize * scaleFactor).toFixed(1));
+    adjustedFontSize <= 0.8 && (
+      adjustedFontSize = adjustedFontSize + 0.2);
+    textLength >= 340 && (
+      adjustedFontSize = 0.85
+    )
+    return `${adjustedFontSize}rem`;
   }
 };
