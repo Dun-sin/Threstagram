@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { PongSpinner } from 'react-spinners-kit';
+import { jsPDF } from 'jspdf';
 
 import { elementToImage } from '../utils/helper';
 import DisplayTheme from './Themes/DisplayTheme';
@@ -13,13 +14,16 @@ const zip = require('jszip')();
 const Preview = () => {
   const { contentState } = useContent();
 
-  const [downloadLoading, setDownloadLoading] = useState(false);
+  const [downloadLoading, setDownloadLoading] = useState({
+    image: false,
+    pdf: false,
+  });
 
   const { postContent } = contentState;
 
-  const handleDownload = async () => {
+  const handleImageDownload = async () => {
     if (contentState.postContent.length === 0) return;
-    setDownloadLoading(true);
+    setDownloadLoading({ ...downloadLoading, image: true });
 
     const data = await elementToImage(contentState.postContent.length);
 
@@ -28,7 +32,7 @@ const Preview = () => {
       link.download = `instagram-0.png`;
       link.href = data[0];
       link.click();
-      setDownloadLoading(false);
+      setDownloadLoading({ ...downloadLoading, image: false });
       return;
     }
     const promises = data.map((url, index) => {
@@ -51,9 +55,34 @@ const Preview = () => {
         link.download = 'instagram-images.zip';
         link.click();
 
-        setDownloadLoading(false);
+        setDownloadLoading({ ...downloadLoading, image: false });
       });
     });
+  };
+
+  const handlePDFDownload = async () => {
+    if (contentState.postContent.length === 0) return;
+    setDownloadLoading({ ...downloadLoading, pdf: true });
+
+    const data = await elementToImage(contentState.postContent.length);
+
+    const doc = new jsPDF('p', 'px', 'letter');
+
+    data.forEach((url, index) => {
+      if (index !== 0) {
+        doc.addPage();
+      }
+
+      // Calculate the aspect ratio of the page
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const imageAspectRatio = pageWidth / pageHeight;
+
+      doc.addImage(url, 'PNG', 0, 0, pageWidth, pageWidth / imageAspectRatio);
+    });
+
+    doc.save('Carousel.pdf');
+    setDownloadLoading({ ...downloadLoading, pdf: false });
   };
 
   return (
@@ -67,18 +96,40 @@ const Preview = () => {
           return <DisplayTheme index={index} key={index} />;
         })}
       </section>
-      <button
-        className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'
-        onClick={handleDownload}
-      >
-        {downloadLoading ? (
-          <span className='flex items-center justify-center w-full'>
-            <PongSpinner size={50} color='#fff' loading={downloadLoading} />
-          </span>
-        ) : (
-          <>Download</>
-        )}
-      </button>
+      <div className='flex gap-2 items-center'>
+        <button
+          className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'
+          onClick={handleImageDownload}
+        >
+          {downloadLoading.image ? (
+            <span className='flex items-center justify-center w-full'>
+              <PongSpinner
+                size={50}
+                color='#fff'
+                loading={downloadLoading.image}
+              />
+            </span>
+          ) : (
+            <>Download Image</>
+          )}
+        </button>
+        <button
+          className='bg-brand rounded-md h-16 p-4 font-medium w-[270px] flex items-center justify-center'
+          onClick={handlePDFDownload}
+        >
+          {downloadLoading.pdf ? (
+            <span className='flex items-center justify-center w-full'>
+              <PongSpinner
+                size={50}
+                color='#fff'
+                loading={downloadLoading.pdf}
+              />
+            </span>
+          ) : (
+            <>Download PDF</>
+          )}
+        </button>
+      </div>
     </span>
   );
 };
