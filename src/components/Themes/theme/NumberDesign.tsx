@@ -33,7 +33,7 @@ export function DefaultNumber({ index }: NumberProps) {
   return (
     <div className='relative'>
       <div
-        className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px]flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md instagram-${index}`}
+        className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px]flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll instagram-${index}`}
         id='card-container'
         style={{
           background: backgroundColor(color),
