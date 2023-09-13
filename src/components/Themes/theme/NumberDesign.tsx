@@ -16,10 +16,10 @@ import { useUser } from '../../../context/UserContext';
 import { useOptions } from '../../../context/OptionsContext';
 import { useContent } from '../../../context/ContentContext';
 
-type darkProps = {
+type NumberProps = {
   index: number;
 };
-export function DefaultDark({ index }: darkProps) {
+export function DefaultNumber({ index }: NumberProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
@@ -64,7 +64,7 @@ export function DefaultDark({ index }: darkProps) {
       </div>
       <div className='h-[80%] flex items-center justify-center'>
         <ContentEditable
-          className={`whitespace-pre-line text-center`}
+          className={`whitespace-pre-line`}
           style={{
             wordBreak: 'break-word',
             fontSize: calculateFontSize(content),
@@ -108,7 +108,7 @@ export function DefaultDark({ index }: darkProps) {
   );
 }
 
-export function DarkOne({ index }: darkProps) {
+export function NumberOne({ index }: NumberProps) {
   const { contentState, dispatchContent } = useContent();
   const { userState } = useUser();
   const { optionsState } = useOptions();
@@ -121,15 +121,19 @@ export function DarkOne({ index }: darkProps) {
 
   return (
     <div
-      className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px]flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md text-secondary instagram-${index}`}
-      id='card-container'
+      className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
+      key={index}
       style={{
         background: backgroundColor(color),
         fontFamily,
         color: fontColor,
       }}
+      id='card-container'
     >
-      <div className='flex gap-2 flex-col justify-center h-[90%]'>
+      {contentState.postContent.length !== 1 && (
+        <div className='text-fmd font-semibold w-full h-[10%]'>{index}</div>
+      )}
+      <div className='h-[80%] flex items-center'>
         <ContentEditable
           className={`whitespace-pre-line`}
           style={{
@@ -152,23 +156,24 @@ export function DarkOne({ index }: darkProps) {
           onPaste={pasteAsPlainText}
           html={content}
         />
-
-        {index === 0 && contentState.postContent.length !== 1 && (
-          <p className='px-2 border border-secondary w-fit rounded-lg text-fxs flex items-center'>
-            <span>Swipe</span>
-            <Icon
-              icon='mingcute:arrow-right-fill'
-              className='h-7 w-7 inline-flex items-center'
-            />
-          </p>
-        )}
       </div>
-      <div className='flex gap-1 items-center'>
-        <p className='text-fxs font-medium text-center h-full flex items-center left-3'>
+
+      <div className='flex gap-1 items-center h-[10%]'>
+        <span className='h-full flex items-center'>
+          <div className='h-7 w-7 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
+            <Image
+              src={userState.avatar}
+              alt={userState.username}
+              quality={100}
+              fill
+              className='object-cover'
+            />
+          </div>
+        </span>
+        <p className='text-fxs font-medium text-center h-full flex items-center'>
           <span>@{userState.username}</span>
         </p>
       </div>
     </div>
   );
 }
-// okay
