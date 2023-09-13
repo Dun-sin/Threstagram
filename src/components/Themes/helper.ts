@@ -52,3 +52,15 @@ export const handleKeyDown = (e) => {
     }
   }
 };
+
+export const deleteContent = (
+  index: number,
+  contentState: ContentStateType,
+  dispatchContent: any
+) => {
+  const newArray = [...contentState.postContent];
+
+  newArray.splice(index, 1);
+
+  dispatchContent({ type: 'SET_CONTENT', payload: newArray });
+};

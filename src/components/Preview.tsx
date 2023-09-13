@@ -57,7 +57,7 @@ const Preview = () => {
   };
 
   return (
-    <span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px]'>
+    <span className='w-4/5 flex flex-col justify-center items-center gap-2 h-auto max-w-[850px] -z-10'>
       <section
         className={`flex gap-4 w-full snap-x snap-mandatory overflow-x-scroll h-auto ${
           postContent.length === 1 && 'justify-center'
