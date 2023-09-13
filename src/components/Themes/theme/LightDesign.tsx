@@ -26,7 +26,7 @@ export function DefaultLight({ index }: lightProps) {
 
   const contentEditableRef = useRef(null);
 
-  const { color, fontFamily } = optionsState;
+  const { color, fontFamily, fontColor } = optionsState;
 
   const content = contentState.postContent[index];
 
@@ -34,7 +34,11 @@ export function DefaultLight({ index }: lightProps) {
     <div
       className={`min-h-[337.5px] max-h-[337.5px] h-[337.5px] min-w-[270px] max-w-[270px] w-[270px] flex justify-between flex-col px-4 py-2 snap-center instagram-${index} overflow-y-scroll`}
       key={index}
-      style={{ background: backgroundColor(color), fontFamily }}
+      style={{
+        background: backgroundColor(color),
+        fontFamily,
+        color: fontColor,
+      }}
       id='card-container'
     >
       {contentState.postContent.length !== 1 && (
