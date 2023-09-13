@@ -10,7 +10,7 @@ const Themes = () => {
   const { themesState, dispatchThemes } = useThemes();
   const { dispatchOptions } = useOptions();
 
-  const [theme, setTheme] = useState<'light' | 'dark'>(themesState.theme);
+  const [theme, setTheme] = useState<'noNumber' | 'number'>(themesState.theme);
 
   const optionRef = useRef<HTMLDivElement>(null);
 
@@ -18,12 +18,12 @@ const Themes = () => {
     handleThemeChange(theme);
   }, []);
 
-  const handleThemeChange = (value: 'light' | 'dark') => {
+  const handleThemeChange = (value: 'number' | 'noNumber') => {
     let position: number;
-    if (value === 'dark') {
+    if (value === 'number') {
       position = 0;
-    } else if (value === 'light') {
-      position = 60;
+    } else if (value === 'noNumber') {
+      position = 80;
     }
     optionRef.current.style.left = position + 'px';
     setTheme(value);
@@ -33,12 +33,17 @@ const Themes = () => {
     <section className='w-full'>
       <div className='flex justify-between items-center'>
         <p className='text-xl font-semibold'>
-          {theme === 'dark' ? 'Dark' : 'Light'} Themes
+          {theme === 'number' ? (
+            <span className='italic'>Number</span>
+          ) : (
+            <span className='italic'>No Number</span>
+          )}{' '}
+          Themes
         </p>
 
         <div className='relative flex h-[30px] border justify-between rounded-lg bg-zinc-900 border-secondary'>
           <div
-            className='w-[60px] top-0 absolute h-full p-1 -z-0 transition-all'
+            className='w-[80px] top-0 absolute h-full p-1 -z-0 transition-all'
             style={{ left: '60px' }}
             ref={optionRef}
           >
@@ -51,34 +56,95 @@ const Themes = () => {
             />
           </div>
           <span
-            className={`w-[60px] flex items-center justify-center z-10 font-medium cursor-pointer ${
-              theme === 'dark' ? 'text-primary' : 'text-secondary'
+            className={`w-[80px] flex items-center justify-center z-10 font-medium cursor-pointer ${
+              theme === 'number' ? 'text-primary' : 'text-secondary'
             }`}
-            onClick={() => handleThemeChange('dark')}
+            onClick={() => handleThemeChange('number')}
           >
-            Dark
+            Number
           </span>
           <span
-            className={`w-[60px] flex items-center justify-center z-10 font-medium cursor-pointer ${
-              theme === 'dark' ? 'text-secondary' : 'text-primary'
+            className={`w-[80px] flex items-center justify-center z-10 font-medium cursor-pointer ${
+              theme === 'number' ? 'text-secondary' : 'text-primary'
             }`}
-            onClick={() => handleThemeChange('light')}
+            onClick={() => handleThemeChange('noNumber')}
           >
-            Light
+            NoNumber
           </span>
         </div>
       </div>
-      {theme === 'light' && (
+      {theme === 'number' && (
         <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-scroll'>
-          {/* Default Light */}
+          {/* Default Number */}
           <div
             className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
             onClick={() => {
               dispatchThemes({
                 type: 'CHANGE_THEME',
                 payload: {
-                  themeName: 'defaultLight',
-                  theme: 'light',
+                  themeName: 'defaultNumber',
+                  theme: 'number',
+                },
+              });
+              dispatchOptions({ type: 'SET_COLOR1', payload: '#1a8fbb' });
+            }}
+          >
+            <div
+              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
+              id='card-container'
+            >
+              <div className='h-[10%] w-full flex justify-between'>
+                <div className='flex gap-1 items-center relative'>
+                  <div className='max-h-6 max-w-6 h-6 w-6 rounded-full relative overflow-hidden border-2 border-secondary border-spacing-6 z-10'>
+                    <Image
+                      src='https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
+                      alt='profile_user_default'
+                      quality={100}
+                      fill
+                      className='object-cover'
+                    />
+                  </div>
+                  <p className='text-[6px] font-medium text-center h-full flex items-center border-2 border-secondary rounded-full px-2 absolute left-3'>
+                    <span>@Mark_zucky</span>
+                  </p>
+                </div>
+                <span className='text-f2xs font-semibold'>1/5</span>
+              </div>
+              <div
+                className={`h-[80%] flex items-center whitespace-pre-line md:text-sm text-[10px]`}
+                style={{
+                  wordBreak: 'break-word',
+                }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
+                recusandae, iusto name
+              </div>
+              <div className='min-h-[10%] w-full flex justify-end'>
+                <div className='flex items-center'>
+                  <span className='h-8 w-8 rounded-full p-2 border-secondary border-2 relative left-4 flex justify-center items-center'>
+                    <Icon
+                      icon='material-symbols:swipe-down-rounded'
+                      className='text-secondary h-7 w-7'
+                    />
+                  </span>
+                  <p className='text-[8px] rounded-full border-2 border-secondary flex items-center px-4 text-center'>
+                    <span>Swipe</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p className='text-center'>Default</p>
+          </div>
+
+          {/* Number One */}
+          <div
+            className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
+            onClick={() => {
+              dispatchThemes({
+                type: 'CHANGE_THEME',
+                payload: {
+                  themeName: 'numberOne',
+                  theme: 'number',
                 },
               });
               dispatchOptions({ type: 'SET_COLOR1', payload: '#1a8fbb' });
@@ -116,74 +182,13 @@ const Themes = () => {
                 </p>
               </div>
             </div>
-            <p className='text-center'>Default Light</p>
+            <p className='text-center'>Number One</p>
           </div>
         </section>
       )}
-      {theme === 'dark' && (
+      {theme === 'noNumber' && (
         <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-scroll'>
-          {/* Default Dark */}
-          <div
-            className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
-            onClick={() => {
-              dispatchThemes({
-                type: 'CHANGE_THEME',
-                payload: {
-                  themeName: 'defaultDark',
-                  theme: 'dark',
-                },
-              });
-              dispatchOptions({ type: 'SET_COLOR1', payload: '#060b0a' });
-            }}
-          >
-            <div
-              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-primary text-secondary`}
-              id='card-container'
-            >
-              <div className='h-[10%] w-full flex justify-between'>
-                <div className='flex gap-1 items-center relative'>
-                  <div className='max-h-6 max-w-6 h-6 w-6 rounded-full relative overflow-hidden border-2 border-secondary border-spacing-6 z-10'>
-                    <Image
-                      src='https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg'
-                      alt='profile_user_default'
-                      quality={100}
-                      fill
-                      className='object-cover'
-                    />
-                  </div>
-                  <p className='text-[6px] font-medium text-center h-full flex items-center border-2 border-secondary rounded-full px-2 absolute left-3'>
-                    <span>@Mark_zucky</span>
-                  </p>
-                </div>
-                <span className='text-f2xs font-semibold'>1/5</span>
-              </div>
-              <div
-                className={`h-[80%] flex items-center whitespace-pre-line md:text-sm text-[10px] text-center`}
-                style={{
-                  wordBreak: 'break-word',
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                recusandae, iusto name
-              </div>
-              <div className='min-h-[10%] w-full flex justify-end'>
-                <div className='flex items-center'>
-                  <span className='h-8 w-8 rounded-full p-2 border-secondary border-2 relative left-4 bg-primary flex justify-center items-center'>
-                    <Icon
-                      icon='material-symbols:swipe-down-rounded'
-                      className='text-secondary h-7 w-7'
-                    />
-                  </span>
-                  <p className='text-[8px] rounded-full border-2 border-secondary flex items-center px-4 text-center'>
-                    <span>Swipe</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <p className='text-center'>Default Dark</p>
-          </div>
-
-          {/* Dark One */}
+          {/* Default no Number */}
           <div>
             <div
               className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
@@ -191,15 +196,15 @@ const Themes = () => {
                 dispatchThemes({
                   type: 'CHANGE_THEME',
                   payload: {
-                    themeName: 'darkOne',
-                    theme: 'dark',
+                    themeName: 'defaultNoNumber',
+                    theme: 'noNumber',
                   },
                 });
-                dispatchOptions({ type: 'SET_COLOR1', payload: '#060b0a' });
+                dispatchOptions({ type: 'SET_COLOR1', payload: '#1a8fbb' });
               }}
             >
               <div
-                className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-primary text-secondary`}
+                className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
                 id='card-container'
               >
                 <div className='flex gap-2 flex-col justify-center h-[90%]'>
@@ -217,12 +222,12 @@ const Themes = () => {
                   </p>
                 </div>
                 <div className='flex gap-1 items-center'>
-                  <p className='text-[6px] font-medium text-center h-full flex items-center left-3'>
+                  <p className='text-[6px] font-medium h-full flex items-center left-3'>
                     <span>@Mark_zucky</span>
                   </p>
                 </div>
               </div>
-              <p className='text-center'>Dark One</p>
+              <p className='text-center'>Number One</p>
             </div>
           </div>
         </section>

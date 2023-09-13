@@ -1,5 +1,8 @@
 // ThemesReducer.tsx
-export const initialThemesState = { themeName: 'defaultLight', theme: 'light' };
+export const initialThemesState = {
+  themeName: 'defaultNumber',
+  theme: 'number',
+};
 
 export function ThemesReducer(state, action) {
   switch (action.type) {

@@ -3,7 +3,7 @@ import { ThemesReducer, initialThemesState } from '../reducers/ThemesReducer';
 
 type ThemesContextType = {
   themesState: {
-    theme: 'dark' | 'light';
+    theme: 'number' | 'noNumber';
     themeName: string;
   };
   dispatchThemes: React.Dispatch<any>;
