@@ -3,6 +3,7 @@ import { ColorType } from '../types';
 export type OptionsType = {
   color: ColorType;
   fontFamily: string;
+  fontColor: string
 };
 
 export const initalOptionsState: OptionsType = {
@@ -11,6 +12,7 @@ export const initalOptionsState: OptionsType = {
     color2: '',
   },
   fontFamily: 'Exo2',
+  fontColor: '#fff'
 };
 
 export const OptionsReducer = (state, action) => {
@@ -26,5 +28,9 @@ export const OptionsReducer = (state, action) => {
       };
     case 'SET_FONTFAMILY':
       return { ...state, fontFamily: action.payload };
+    case 'SET_FONTCOLOR':
+      return { ...state, fontColor: action.payload }
+    default:
+      break;
   }
 };

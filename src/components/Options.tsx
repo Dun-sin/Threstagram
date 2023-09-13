@@ -25,13 +25,14 @@ const Options = (props: OptionsTypeProps) => {
   const { optionsState, dispatchOptions } = useOptions();
   const { dispatchUser } = useUser();
 
-  const { color } = optionsState;
+  const { color, fontColor } = optionsState;
 
   const [urlLoading, seturlLoading] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState({
     color1: false,
     color2: false,
+    fontColor: false,
   });
   const [addColor, setAddColor] = useState(false);
 
@@ -46,9 +47,9 @@ const Options = (props: OptionsTypeProps) => {
 
       if (
         isClickOutsideColorPicker &&
-        (isPickerOpen.color1 || isPickerOpen.color2)
+        (isPickerOpen.color1 || isPickerOpen.color2 || isPickerOpen.fontColor)
       ) {
-        setIsPickerOpen({ color1: false, color2: false });
+        setIsPickerOpen({ color1: false, color2: false, fontColor: false });
       }
     };
 
@@ -217,6 +218,41 @@ const Options = (props: OptionsTypeProps) => {
                         className='h-6 w-6 cursor-pointer'
                         onClick={handleAddCoor}
                       />
+                    </div>
+
+                    {/* Font Color */}
+                    <div className='flex gap-2 items-center'>
+                      <p>Font Color: </p>
+                      <span>
+                        <div
+                          className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                          style={{
+                            backgroundColor: fontColor,
+                          }}
+                          onClick={() =>
+                            setIsPickerOpen({
+                              ...isPickerOpen,
+                              fontColor: !isPickerOpen.fontColor,
+                            })
+                          }
+                        />
+                        {isPickerOpen.fontColor && (
+                          <span
+                            className='absolute top-20 left-[30%]'
+                            ref={colorPickerRef}
+                          >
+                            <ColorPicker
+                              color={fontColor}
+                              onChange={(color) =>
+                                dispatchOptions({
+                                  type: 'SET_FONTCOLOR',
+                                  payload: color.hex,
+                                })
+                              }
+                            />
+                          </span>
+                        )}
+                      </span>
                     </div>
 
                     {/* Number of threads */}
