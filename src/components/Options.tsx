@@ -99,7 +99,7 @@ const Options = (props: OptionsTypeProps) => {
   };
 
   return (
-    <header className='w-full flex items-center justify-center flex-col relative max-h-full z-20'>
+    <header className='w-full flex items-center justify-center flex-col relative max-h-full'>
       <div className='w-4/5 max-w-[850px] h-full'>
         <div className='flex items-center justify-center w-full'>
           <input
@@ -122,7 +122,7 @@ const Options = (props: OptionsTypeProps) => {
           )}
         </div>
         {contentState.postContent.length !== 0 && (
-          <section className='w-full flex gap-4 justify-center relative select-none h-full'>
+          <section className='w-full flex gap-4 justify-center relative select-none'>
             <div
               className='flex items-center py-2 h-fit cursor-pointer'
               onClick={handleDropDown}
@@ -253,35 +253,6 @@ const Options = (props: OptionsTypeProps) => {
                           </span>
                         )}
                       </span>
-                    </div>
-
-                    {/* Number of threads */}
-                    <div className='flex gap-2 items-center'>
-                      <p>Number of Threads: </p>
-                      <div>
-                        <select
-                          className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-                          defaultValue={contentState.postContent.length}
-                          onChange={(event) => {
-                            const eventValue = Number(event.target.value);
-                            dispatchContent({
-                              type: 'SET_CONTENT',
-                              payload: contentState.postContent.slice(
-                                0,
-                                eventValue
-                              ),
-                            });
-                          }}
-                        >
-                          {numbers(contentState.postContent.length).map(
-                            (value) => (
-                              <option value={value} key={value}>
-                                {value}
-                              </option>
-                            )
-                          )}
-                        </select>
-                      </div>
                     </div>
 
                     {/* Custom Font */}
