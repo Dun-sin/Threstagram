@@ -1,4 +1,4 @@
-import { useThemes } from '../../context/ThemesContext';
+import { useThemes } from '../context/ThemesContext';
 import { DefaultNoNumber } from './theme/NoNumberDesign';
 import { NumberOne, DefaultNumber } from './theme/NumberDesign';
 

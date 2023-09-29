@@ -3,7 +3,7 @@ import { OptionsProvider } from './context/OptionsContext';
 import { ThemesProvider } from './context/ThemesContext';
 import { UserProvider } from './context/UserContext';
 
-const AllProivders = ({ children }) => {
+const Proivders = ({ children }) => {
   return (
     <ThemesProvider>
       <OptionsProvider>
@@ -15,4 +15,4 @@ const AllProivders = ({ children }) => {
   );
 };
 
-export default AllProivders;
+export default Proivders;

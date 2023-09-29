@@ -5,14 +5,17 @@ import ColorPicker from 'react-pick-color';
 import { PongSpinner } from 'react-spinners-kit';
 
 import FontPicker from './FontPicker';
-import Themes from '../components/Themes';
+import Themes from '../Themes';
 
-import { extractUserName } from '../utils/helper';
-import { getUserProfile } from '../utils/api';
+import { extractUserName } from '../../utils/helper';
+import { getUserProfile } from '../../utils/api';
 
 import { useContent } from '../context/ContentContext';
 import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
+
+import Input from '../../components/Input';
+import SubmitButton from '../../components/Button/SubmitButton';
 
 type OptionsTypeProps = {
   setPostURL: Dispatch<SetStateAction<string>>;
@@ -102,23 +105,13 @@ const Options = (props: OptionsTypeProps) => {
     <header className='w-full flex items-center justify-center flex-col relative max-h-full'>
       <div className='w-4/5 max-w-[850px] h-full'>
         <div className='flex items-center justify-center w-full'>
-          <input
-            type='text'
-            placeholder='Threads Post URL'
-            ref={urlRef}
-            className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
-          />
+          <Input placeholder='Threads Post URL' refValue={urlRef} />
           {urlLoading ? (
             <span className='w-[20%] bg-brand flex items-center justify-center h-12 rounded-tr-md'>
               <PongSpinner size={30} color='#fff' loading={urlLoading} />
             </span>
           ) : (
-            <button
-              onClick={handleOnClick}
-              className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%] flex justify-center items-center'
-            >
-              <span>Submit</span>
-            </button>
+            <SubmitButton handleOnClick={handleOnClick} />
           )}
         </div>
         {contentState.postContent.length !== 0 && (
@@ -281,12 +274,3 @@ const Options = (props: OptionsTypeProps) => {
 };
 
 export default Options;
-
-function numbers(postNumber: number) {
-  const number = [];
-  for (let index = 1; index < postNumber + 1; index++) {
-    number.push(index);
-  }
-
-  return number;
-}

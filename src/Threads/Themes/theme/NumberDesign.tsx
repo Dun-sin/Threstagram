@@ -13,9 +13,9 @@ import {
   deleteContent,
 } from '../helper';
 
-import { useUser } from '../../../context/UserContext';
-import { useOptions } from '../../../context/OptionsContext';
-import { useContent } from '../../../context/ContentContext';
+import { useUser } from '../../context/UserContext';
+import { useOptions } from '../../context/OptionsContext';
+import { useContent } from '../../context/ContentContext';
 
 type NumberProps = {
   index: number;

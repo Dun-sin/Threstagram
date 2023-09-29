@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 import { Icon } from '@iconify/react';
 
-import { useThemes } from '../../context/ThemesContext';
-import { useOptions } from '../../context/OptionsContext';
+import { useThemes } from '../context/ThemesContext';
+import { useOptions } from '../context/OptionsContext';
 
 const Themes = () => {
   const { themesState, dispatchThemes } = useThemes();
