@@ -3,7 +3,7 @@ import {
   contentReducer,
   initialContentState,
   ContentStateType,
-} from '../reducers/ContentReducer';
+} from '../reducer/ContentReducer';
 
 // Define the type for the content context
 type ContentContextType = {

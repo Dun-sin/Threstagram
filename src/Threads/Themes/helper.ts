@@ -1,4 +1,4 @@
-import { ContentStateType } from '../../reducers/ContentReducer';
+import { ContentStateType } from '../reducer/ContentReducer';
 import { ColorType } from '../../types';
 
 export const pasteAsPlainText = (event) => {

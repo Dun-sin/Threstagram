@@ -3,7 +3,7 @@ import {
   OptionsReducer,
   OptionsType,
   initalOptionsState,
-} from '../reducers/OptionsReducer';
+} from '../reducer/OptionsReducer';
 
 type OptionsContextType = {
   optionsState: OptionsType;

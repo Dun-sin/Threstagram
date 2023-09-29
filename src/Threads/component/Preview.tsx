@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { PongSpinner } from 'react-spinners-kit';
 import { jsPDF } from 'jspdf';
 
-import { elementToImage } from '../utils/helper';
-import DisplayTheme from './Themes/DisplayTheme';
+import { elementToImage } from '../../utils/helper';
+import DisplayTheme from '../Themes/DisplayTheme';
 
 // context
 import { useContent } from '../context/ContentContext';

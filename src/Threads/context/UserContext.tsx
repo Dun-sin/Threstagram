@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { User } from '../types';
-import { UserReducer, initalUserState } from '../reducers/UserReducer';
+import { User } from '../../types';
+import { UserReducer, initalUserState } from '../reducer/UserReducer';
 
 type UserProviderProps = {
   children: ReactNode;
