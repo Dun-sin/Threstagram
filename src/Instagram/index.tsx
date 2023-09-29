@@ -60,7 +60,7 @@ const Instagram = () => {
         <BackButton />
         <Social />
       </header>
-      <main className='flex items-center w-full justify-center overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 h-full pb-10 gap-4 max-w-[850px] '>
+      <main className='flex items-center w-full justify-center overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 h-full pb-10 gap-4'>
         <div className='w-4/5 min-w-[300px] flex items-center flex-col gap-4'>
           <h1 className='text-flg font-bold'>
             Convert Your Instagram Post to PDF
