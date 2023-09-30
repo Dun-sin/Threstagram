@@ -65,7 +65,7 @@ const Instagram = () => {
           <h1 className='text-flg font-bold'>
             Convert Your Instagram Post to PDF
           </h1>
-          <div className='flex items-center w-full'>
+          <div className='flex items-center w-full max-w-[500px] min-w-[300px]'>
             <Input refValue={urlRef} placeholder='Instagram Post URL' />
             {loading.status ? (
               <span className='w-[20%] bg-brand flex items-center justify-center h-12 rounded-tr-md'>
