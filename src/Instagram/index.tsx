@@ -72,7 +72,7 @@ const Instagram = () => {
                 <PongSpinner size={30} color='#fff' loading={loading.status} />
               </span>
             ) : (
-              <SubmitButton handleOnClick={handleOnClick} />
+              <SubmitButton handleOnClick={handleOnClick} text="Download" />
             )}
           </div>
           {loading.status && <p>{loading.message}</p>}

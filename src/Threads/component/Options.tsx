@@ -111,7 +111,7 @@ const Options = (props: OptionsTypeProps) => {
               <PongSpinner size={30} color='#fff' loading={urlLoading} />
             </span>
           ) : (
-            <SubmitButton handleOnClick={handleOnClick} />
+            <SubmitButton handleOnClick={handleOnClick} text="Submit" />
           )}
         </div>
         {contentState.postContent.length !== 0 && (
