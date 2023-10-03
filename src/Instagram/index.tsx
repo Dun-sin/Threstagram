@@ -16,6 +16,13 @@ const Instagram = () => {
     if (urlRef.current === null) return;
     setLoading({ status: true, message: '' });
     const splitUrl = urlRef.current.value.split('/p/');
+    if (splitUrl[1] === undefined) {
+      setLoading({
+        status: false,
+        message: 'Invalid Url. Please provide a valid instagram image link.',
+      });
+      return;
+    }
     const url = splitUrl[1].split('/')[0];
 
     setLoading({ status: true, message: 'downloading images' });
@@ -44,7 +51,7 @@ const Instagram = () => {
 
     doc.save('Carousel.pdf');
 
-    setLoading({ status: false, message: 'Done' });
+    setLoading({ status: false, message: '' });
   };
 
   return (
@@ -72,10 +79,10 @@ const Instagram = () => {
                 <PongSpinner size={30} color='#fff' loading={loading.status} />
               </span>
             ) : (
-              <SubmitButton handleOnClick={handleOnClick} text="Download" />
+              <SubmitButton handleOnClick={handleOnClick} text='Download' />
             )}
           </div>
-          {loading.status && <p>{loading.message}</p>}
+          <p className='empty:hidden'>{loading.message}</p>
         </div>
       </main>
     </section>
