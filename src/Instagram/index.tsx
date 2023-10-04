@@ -26,10 +26,19 @@ const Instagram = () => {
     const url = splitUrl[1].split('/')[0];
 
     setLoading({ status: true, message: 'downloading images' });
-    const response = await fetch(`/api/instagram/${url}`);
-    const { data } = await response.json();
 
-    convertToPDF(data);
+    try {
+      const response = await fetch(`/api/instagram/${url}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error);
+      }
+      const { data } = await response.json();
+
+      convertToPDF(data);
+    } catch (err) {
+      setLoading({ status: false, message: err.message });
+    }
   };
 
   const convertToPDF = (data) => {
