@@ -54,7 +54,7 @@ export default function Threads() {
         <BackButton />
         <Social />
       </header>
-      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10  pb-10'>
+      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10  pb-10 pt-40'>
         <span className='flex flex-col items-center'>
           <h1 className='md:text-flg text-fmd font-bold text-center'>
             Convert Your Threads Post To Images
