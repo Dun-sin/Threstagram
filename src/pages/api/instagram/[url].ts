@@ -33,6 +33,12 @@ const getImage = async (req: NextApiRequest, res: NextApiResponse) => {
   const response = await axios.request(options);
   const data = response.data;
 
+  if (data.data.main_media_type === 'video') {
+    return res.status(400).json({
+      error: 'Invalid Instagram post link. Only image posts are allowed.',
+    });
+  }
+
   const baseURL = await getBaseImageUrl(data.data.child_medias_hd);
 
   return res.status(200).json({ data: baseURL });
