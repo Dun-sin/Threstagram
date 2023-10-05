@@ -28,3 +28,18 @@
   background-color: #f9ffff !important;
   color: #060b0a !important;
 }
+
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.text-f2xl{
+  text-align: center;
+}
+
+@media (max-width: 600px){
+  .flex{
+    flex-direction: column;
+  }
+}
