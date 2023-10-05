@@ -24,7 +24,9 @@ export default async function handler(
         if (!!value.post.text_post_app_info.share_info.quoted_post) {
           throw Error(`Can't work with a quote tweet`);
         }
-
+        if(!value.post.caption){
+          throw Error(`Can't work with thread without caption.`)
+        }
         return content.push(value.post.caption.text);
       });
 
@@ -39,7 +41,7 @@ export default async function handler(
     console.error(error);
     res
       .status(500)
-      .json({ isSuccess: false, message: 'Internal Server Error' });
+      .json({ isSuccess: false, message: error.message || 'Internal Server Error' });
   }
 }
 
