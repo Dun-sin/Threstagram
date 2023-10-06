@@ -25,10 +25,7 @@ export default async function handler(
           throw Error(`Can't work with a quote tweet`);
         }
         if(!value.post.caption){
-          return res.status(500)
-          .json({
-            isSuccess: false, message: `Can't work with thread without caption.`
-          })
+          throw Error(`Can't work with thread without caption.`)
         }
         return content.push(value.post.caption.text);
       });
