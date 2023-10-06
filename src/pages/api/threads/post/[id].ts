@@ -24,7 +24,9 @@ export default async function handler(
         if (!!value.post.text_post_app_info.share_info.quoted_post) {
           throw Error(`Can't work with a quote tweet`);
         }
-
+        if(!value.post.caption){
+          throw Error(`Can't work with thread without caption.`)
+        }
         return content.push(value.post.caption.text);
       });
 
