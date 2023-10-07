@@ -60,7 +60,7 @@ export default function Threads() {
             Convert Your Threads Post To Images
           </h1>
           {contentState.postContent.length !== 0 && (
-            <ul className='flex items-center gap-6 flex-wrap'>
+            <ul className='hidden md:flex items-center gap-6 flex-wrap'>
               <li className='flex items-center gap-2'>
                 <span>CTRL + B</span>
                 <span>-</span>
