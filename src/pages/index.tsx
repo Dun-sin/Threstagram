@@ -17,12 +17,12 @@ export default function Home() {
         </h2>
         <main className='flex gap-5 flex-col sm:flex-row'>
           <Link href='/threads'>
-            <section className='h-52 w-64 text-fmd text-center cursor-pointer border border-secondary flex items-center justify-center rounded px-2'>
+            <section className='h-52 w-64 text-fmd text-center cursor-pointer border border-secondary flex items-center justify-center rounded px-4 hover'>
               <span>Convert Your Threads Post to Image</span>
             </section>
           </Link>
           <Link href='/instagram'>
-            <section className='h-52 w-64 text-fmd text-center cursor-pointer border border-secondary flex items-center justify-center rounded px-2'>
+            <section className='h-52 w-64 text-fmd text-center cursor-pointer border border-secondary flex items-center justify-center rounded px-4'>
               <span>Convert Your Instagram Post to PDF</span>
             </section>
           </Link>

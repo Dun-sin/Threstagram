@@ -103,7 +103,7 @@ const Options = (props: OptionsTypeProps) => {
 
   return (
     <header className='w-full flex items-center justify-center flex-col relative max-h-full'>
-      <div className='w-4/5 max-w-[850px] h-full'>
+      <div className='w-4/5 max-w-[750px] min-w-[300px] h-full flex flex-col items-center'>
         <div className='flex items-center justify-center w-full'>
           <Input placeholder='Threads Post URL' refValue={urlRef} />
           {urlLoading ? (
@@ -111,7 +111,7 @@ const Options = (props: OptionsTypeProps) => {
               <PongSpinner size={30} color='#fff' loading={urlLoading} />
             </span>
           ) : (
-            <SubmitButton handleOnClick={handleOnClick} text="Submit" />
+            <SubmitButton handleOnClick={handleOnClick} text='Submit' />
           )}
         </div>
         {contentState.postContent.length !== 0 && (

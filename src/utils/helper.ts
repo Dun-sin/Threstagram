@@ -65,17 +65,18 @@ export const calculateFontSize = (text: string) => {
     let adjustedFontSize = defaultFontSize + scaleFactor;
     adjustedFontSize >= 2 && (adjustedFontSize = 1.7); // Limit maximum font size
     textLength <= 40 && (adjustedFontSize = 2)
-    console.log(adjustedFontSize)
     return `${adjustedFontSize.toFixed(1)}rem`;
   } else {
     // Calculate a smaller font size for longer text
     const scaleFactor = maxLength / textLength;
     let adjustedFontSize = Number((defaultFontSize * scaleFactor).toFixed(1));
-    adjustedFontSize <= 0.8 && (
+    adjustedFontSize <= 0.7 && (
       adjustedFontSize = adjustedFontSize + 0.2);
     textLength >= 340 && (
-      adjustedFontSize = 0.85
+      adjustedFontSize = 0.55
     )
+
+    console.log({adjustedFontSize, textLength})
     return `${adjustedFontSize}rem`;
   }
 };

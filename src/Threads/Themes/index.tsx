@@ -74,7 +74,7 @@ const Themes = () => {
         </div>
       </div>
       {theme === 'number' && (
-        <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-scroll'>
+        <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-auto'>
           {/* Default Number */}
           <div
             className='cursor-pointer min-w-[140px] max-w-[140px] w-[140px]'
@@ -90,7 +90,7 @@ const Themes = () => {
             }}
           >
             <div
-              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
+              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-auto rounded-md bg-brand text-secondary`}
               id='card-container'
             >
               <div className='h-[10%] w-full flex justify-between'>
@@ -116,8 +116,7 @@ const Themes = () => {
                   wordBreak: 'break-word',
                 }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                recusandae, iusto name
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </div>
               <div className='min-h-[10%] w-full flex justify-end'>
                 <div className='flex items-center'>
@@ -151,7 +150,7 @@ const Themes = () => {
             }}
           >
             <div
-              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
+              className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-auto rounded-md bg-brand text-secondary`}
               id='card-container'
             >
               <div className='text-fmd font-semibold w-full h-[10%]'>1</div>
@@ -161,8 +160,7 @@ const Themes = () => {
                   wordBreak: 'break-word',
                 }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                recusandae, iusto nam, odio vero reprehenderit dolores deleniti
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </div>
 
               <div className='flex gap-1 items-center h-[10%]'>
@@ -187,7 +185,7 @@ const Themes = () => {
         </section>
       )}
       {theme === 'noNumber' && (
-        <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-scroll'>
+        <section className='flex gap-2 w-full snap-x snap-mandatory overflow-x-auto'>
           {/* Default no Number */}
           <div>
             <div
@@ -204,7 +202,7 @@ const Themes = () => {
               }}
             >
               <div
-                className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-scroll rounded-md bg-brand text-secondary`}
+                className={`min-h-[162.5px] max-h-[162.5px] h-[162.5px] w-full flex justify-between flex-col px-4 py-2 snap-center overflow-y-auto rounded-md bg-brand text-secondary`}
                 id='card-container'
               >
                 <div className='flex gap-2 flex-col justify-center h-[90%]'>
@@ -215,7 +213,6 @@ const Themes = () => {
                     }}
                   >
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Labore recusandae, iusto name
                   </div>
                   <p className='px-2 border border-secondary w-fit rounded-lg text-[8px]'>
                     <span>Swipe</span>
