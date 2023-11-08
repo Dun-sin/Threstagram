@@ -10,7 +10,7 @@ export default function Home() {
             "url('https://e0.pxfuel.com/wallpapers/487/755/desktop-wallpaper-black-and-blue-black-blue-backgrounds-new.jpg')",
         }}
       />
-      <div className='flex items-center w-full flex-col justify-center overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 h-full pb-10 gap-4'>
+      <div className='flex items-center w-full flex-col justify-center overflow-auto bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 h-full pb-10 gap-4'>
         <h1 className='font-bold text-f3xl'>Threstagram</h1>
         <h2 className='font-semibold text-f2xl text-center -mt-7'>
           Welcome to the social toolbox
