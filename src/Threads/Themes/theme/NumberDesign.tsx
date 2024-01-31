@@ -107,13 +107,15 @@ export function DefaultNumber({ index }: NumberProps) {
           </div>
         )}
       </div>
-      <span className='absolute -right-3 top-0 z-10'>
-        <Icon
-          icon='ep:remove-filled'
-          className='h-8 w-8 text-secondary cursor-pointer'
-          onClick={() => deleteContent(index, contentState, dispatchContent)}
-        />
-      </span>
+      {contentState.postContent.length >= 2 && (
+        <span className='absolute -right-3 top-0 z-10'>
+          <Icon
+            icon='ep:remove-filled'
+            className='h-8 w-8 text-secondary cursor-pointer'
+            onClick={() => deleteContent(index, contentState, dispatchContent)}
+          />
+        </span>
+      )}
     </div>
   );
 }
@@ -186,13 +188,15 @@ export function NumberOne({ index }: NumberProps) {
           </p>
         </div>
       </div>
-      <span className='absolute -right-3 top-0 z-10'>
-        <Icon
-          icon='ep:remove-filled'
-          className='h-8 w-8 text-secondary cursor-pointer'
-          onClick={() => deleteContent(index, contentState, dispatchContent)}
-        />
-      </span>
+      {contentState.postContent.length >= 2 && (
+        <span className='absolute -right-3 top-0 z-10'>
+          <Icon
+            icon='ep:remove-filled'
+            className='h-8 w-8 text-secondary cursor-pointer'
+            onClick={() => deleteContent(index, contentState, dispatchContent)}
+          />
+        </span>
+      )}
     </div>
   );
 }

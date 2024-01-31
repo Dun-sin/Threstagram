@@ -12,6 +12,7 @@
     "fix": "eslint --ext .ts --ext .tsx --fix ./src"
   },
   "dependencies": {
+    "@iconify/react": "^4.1.1",
     "@types/dom-to-image": "^2.6.4",
     "@uiw/react-md-editor": "^3.23.5",
     "axios": "^1.5.0",
@@ -30,7 +31,6 @@
     "threads-api": "^1.6.3"
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.1",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@typescript-eslint/eslint-plugin": "^6.5.0",

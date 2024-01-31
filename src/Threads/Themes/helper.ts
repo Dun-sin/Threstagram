@@ -58,6 +58,7 @@ export const deleteContent = (
   contentState: ContentStateType,
   dispatchContent: any
 ) => {
+  if (contentState.postContent.length < 2) return;
   const newArray = [...contentState.postContent];
 
   newArray.splice(index, 1);
