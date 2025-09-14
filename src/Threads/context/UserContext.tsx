@@ -1,35 +1,29 @@
-import { ReactNode, createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
+import { UserAction, UserReducer, initialUserState } from '../reducer/UserReducer';
+
 import { User } from '../../types';
-import { UserReducer, initalUserState } from '../reducer/UserReducer';
 
-type UserProviderProps = {
-  children: ReactNode;
-};
-
-type UserContextType = {
+interface UserContextType {
   userState: User;
-  dispatchUser: React.Dispatch<any>;
-};
-const UserContext = createContext<UserContextType | null>(null);
+  dispatchUser: React.Dispatch<UserAction>;
+}
 
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-  return context;
-};
-
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [userState, dispatchUser] = useReducer(UserReducer, initalUserState);
-
-  const contextValue: UserContextType = {
-    userState,
-    dispatchUser,
-  };
+export function UserProvider({ children }: { children: React.ReactNode }) {
+  const [userState, dispatchUser] = useReducer(UserReducer, initialUserState);
 
   return (
-    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ userState, dispatchUser }}>
+      {children}
+    </UserContext.Provider>
   );
-};
+}
+
+export function useUser() {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error('useUser must be used within a UserProvider');
+  }
+  return context;
+}

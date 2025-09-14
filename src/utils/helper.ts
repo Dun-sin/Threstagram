@@ -80,3 +80,12 @@ export const calculateFontSize = (text: string) => {
     return `${adjustedFontSize}rem`;
   }
 };
+
+export const getAccessToken = () => {
+  const token = localStorage.getItem('threads_token');
+  return token;
+};
+
+export const removeAccessToken = () => {
+  localStorage.removeItem('threads_token');
+};
