@@ -1,5 +1,5 @@
-import domtoimage from 'dom-to-image';
 import { changeDpiDataUrl } from 'changedpi';
+import domtoimage from 'dom-to-image';
 
 export const extractUserName = (url: string): string => {
   return url.split('@')[1].split('/')[0];
@@ -8,7 +8,7 @@ export const extractUserName = (url: string): string => {
 export const extractPostID = (url: string): string => {
   const parts = url.split('/');
   const postIdIndex = parts.indexOf('post') + 1;
-  const postId = parts[postIdIndex];
+  const postId = parts[postIdIndex].split('?')[0];
 
   return postId;
 };
@@ -64,19 +64,16 @@ export const calculateFontSize = (text: string) => {
     const scaleFactor = 0.9 - textLength / maxLength;
     let adjustedFontSize = defaultFontSize + scaleFactor;
     adjustedFontSize >= 2 && (adjustedFontSize = 1.7); // Limit maximum font size
-    textLength <= 40 && (adjustedFontSize = 2)
+    textLength <= 40 && (adjustedFontSize = 2);
     return `${adjustedFontSize.toFixed(1)}rem`;
   } else {
     // Calculate a smaller font size for longer text
     const scaleFactor = maxLength / textLength;
     let adjustedFontSize = Number((defaultFontSize * scaleFactor).toFixed(1));
-    adjustedFontSize <= 0.7 && (
-      adjustedFontSize = adjustedFontSize + 0.2);
-    textLength >= 340 && (
-      adjustedFontSize = 0.55
-    )
+    adjustedFontSize <= 0.7 && (adjustedFontSize = adjustedFontSize + 0.2);
+    textLength >= 340 && (adjustedFontSize = 0.55);
 
-    console.log({adjustedFontSize, textLength})
+    console.log({ adjustedFontSize, textLength });
     return `${adjustedFontSize}rem`;
   }
 };

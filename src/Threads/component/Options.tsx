@@ -1,36 +1,18 @@
-import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { Icon } from '@iconify/react';
 import ColorPicker from 'react-pick-color';
-import { PongSpinner } from 'react-spinners-kit';
-
 import FontPicker from './FontPicker';
+import { Icon } from '@iconify/react';
 import Themes from '../Themes';
-
-import { extractUserName } from '../../utils/helper';
-import { getUserProfile } from '../../utils/api';
-
 import { useContent } from '../context/ContentContext';
-import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
 
-import Input from '../../components/Input';
-import SubmitButton from '../../components/Button/SubmitButton';
+const Options = () => {
 
-type OptionsTypeProps = {
-  setPostURL: Dispatch<SetStateAction<string>>;
-};
-
-const Options = (props: OptionsTypeProps) => {
-  const { setPostURL } = props;
-
-  const { contentState, dispatchContent } = useContent();
+  const { contentState } = useContent();
   const { optionsState, dispatchOptions } = useOptions();
-  const { dispatchUser } = useUser();
 
   const { color, fontColor } = optionsState;
-
-  const [urlLoading, seturlLoading] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState({
     color1: false,
@@ -39,7 +21,6 @@ const Options = (props: OptionsTypeProps) => {
   });
   const [addColor, setAddColor] = useState(false);
 
-  const urlRef = useRef<HTMLInputElement>(null);
   const colorPickerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -71,27 +52,6 @@ const Options = (props: OptionsTypeProps) => {
     !addColor && dispatchOptions({ type: 'SET_COLOR2', payload: '' });
   }, [addColor]);
 
-  const handleOnClick = async () => {
-    if (urlRef.current === null) return;
-    const url = urlRef.current.value;
-    urlRef.current.value = '';
-
-    if (!(url.includes('threads.net') && url.includes('post'))) {
-      dispatchContent({ type: 'SET_ERROR', payload: 'Invalid Link' });
-      return;
-    }
-    dispatchContent({ type: 'SET_ERROR', payload: '' });
-
-    seturlLoading(true);
-    setPostURL(url);
-
-    const username = extractUserName(url);
-    const avatar = await getUserProfile(username);
-
-    dispatchUser({ type: 'ADD_USERNAME', payload: username });
-    dispatchUser({ type: 'ADD_AVATAR', payload: avatar });
-    seturlLoading(false);
-  };
 
   const handleAddCoor = () => {
     setAddColor(!addColor);
@@ -102,18 +62,8 @@ const Options = (props: OptionsTypeProps) => {
   };
 
   return (
-    <header className='w-full flex items-center justify-center flex-col relative max-h-full'>
+    <section className='w-full flex items-center justify-center flex-col relative max-h-full'>
       <div className='w-4/5 max-w-[750px] min-w-[300px] h-full flex flex-col items-center'>
-        <div className='flex items-center justify-center w-full'>
-          <Input placeholder='Threads Post URL' refValue={urlRef} />
-          {urlLoading ? (
-            <span className='w-[20%] bg-brand flex items-center justify-center h-12 rounded-tr-md'>
-              <PongSpinner size={30} color='#fff' loading={urlLoading} />
-            </span>
-          ) : (
-            <SubmitButton handleOnClick={handleOnClick} text='Submit' />
-          )}
-        </div>
         {contentState.postContent.length !== 0 && (
           <section className='w-full flex gap-4 justify-center relative select-none'>
             <div
@@ -267,9 +217,12 @@ const Options = (props: OptionsTypeProps) => {
             )}
           </section>
         )}
+
+
+
       </div>
-      <p className='text-red-600 text-fsm text-center'>{contentState.error}</p>
-    </header>
+    </section>
+
   );
 };
 

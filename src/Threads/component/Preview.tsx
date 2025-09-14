@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-import { PongSpinner } from 'react-spinners-kit';
-import { jsPDF } from 'jspdf';
-
-import { elementToImage } from '../../utils/helper';
 import DisplayTheme from '../Themes/DisplayTheme';
+import { PongSpinner } from 'react-spinners-kit';
+import { elementToImage } from '../../utils/helper';
+import { jsPDF } from 'jspdf';
+import { useContent } from '../context/ContentContext';
 
 // context
-import { useContent } from '../context/ContentContext';
+
 
 const zip = require('jszip')();
 
-const Preview = () => {
+interface PreviewProps {
+  setShowAllPosts: Dispatch<SetStateAction<boolean>>;
+}
+
+const Preview = ({ setShowAllPosts }: PreviewProps) => {
   const { contentState } = useContent();
 
   const [downloadLoading, setDownloadLoading] = useState({
@@ -130,6 +134,7 @@ const Preview = () => {
           )}
         </button>
       </div>
+      <button onClick={() => setShowAllPosts(true)} className='bg-red-400 rounded-md h-16 p-4 font-medium w-[550px] min-w-[270px] flex items-center justify-center'>Change Post</button>
     </span>
   );
 };
