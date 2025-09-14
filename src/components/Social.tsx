@@ -9,7 +9,6 @@ const Social = () => {
         target='_blank'
       >
         <Icon icon='ri:github-fill' className='h-7 w-7' />
-        Github
       </a>
       <a
         className='bg-yellow-400 px-4 py-2 flex gap-2 items-center rounded-md cursor-pointer'
