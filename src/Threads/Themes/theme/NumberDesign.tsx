@@ -1,21 +1,19 @@
-import { useRef } from 'react';
-import Image from 'next/image';
+import {
+  backgroundColor,
+  deleteContent,
+  handleContentChange,
+  handleKeyDown,
+  pasteAsPlainText,
+} from '../helper';
+import { useEffect, useRef } from 'react';
 
 import ContentEditable from 'react-contenteditable';
 import { Icon } from '@iconify/react';
-
+import Image from 'next/image';
 import { calculateFontSize } from '../../../utils/helper';
-import {
-  backgroundColor,
-  handleContentChange,
-  pasteAsPlainText,
-  handleKeyDown,
-  deleteContent,
-} from '../helper';
-
-import { useUser } from '../../context/UserContext';
-import { useOptions } from '../../context/OptionsContext';
 import { useContent } from '../../context/ContentContext';
+import { useOptions } from '../../context/OptionsContext';
+import { useUser } from '../../context/UserContext';
 
 type NumberProps = {
   index: number;
@@ -45,7 +43,7 @@ export function DefaultNumber({ index }: NumberProps) {
           <div className='flex gap-1 items-center relative'>
             <div className='max-h-10 max-w-10 h-10 w-10 rounded-full relative overflow-hidden border-2 border-secondary border-spacing-6 z-10'>
               <Image
-                src={userState.avatar}
+                src={userState.profilePictureUrl}
                 alt={userState.username}
                 quality={100}
                 fill
@@ -175,7 +173,7 @@ export function NumberOne({ index }: NumberProps) {
           <span className='h-full flex items-center'>
             <div className='h-7 w-7 rounded-full relative overflow-hidden border-2 border-secondary  border-spacing-6'>
               <Image
-                src={userState.avatar}
+                src={userState.profilePictureUrl}
                 alt={userState.username}
                 quality={100}
                 fill
