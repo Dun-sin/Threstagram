@@ -1,26 +1,19 @@
-// next/react
+import { getAccessToken, removeAccessToken } from '../utils/helper';
 import { useEffect, useState } from 'react';
 
-// libraries
-import { PongSpinner } from 'react-spinners-kit';
-
-// components
-import Social from '../components/Social';
-import Options from './component/Options';
-import Preview from './component/Preview';
+import AllPosts from './component/AllPosts';
 import BackButton from '../components/Button/BackButton';
-
-// utils
-import { extractPostID } from '../utils/helper';
+import Options from './component/Options';
+import { PongSpinner } from 'react-spinners-kit';
+import Preview from './component/Preview';
+import Social from '../components/Social';
 import { getPostContent } from '../utils/api';
-
-// context
-import { useUser } from './context/UserContext';
 import { useContent } from './context/ContentContext';
+import { useUser } from './context/UserContext';
 
 export default function Threads() {
   const { contentState, dispatchContent } = useContent();
-  const { userState } = useUser();
+  const { userState, dispatchUser } = useUser();
 
   const [showAllPosts, setShowAllPosts] = useState(true);
   const [id, setId] = useState<string | null>(null)
@@ -158,7 +151,8 @@ export default function Threads() {
           </div>
         )}
       </header>
-      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-auto bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10  pb-10'>
+
+      <main className='flex items-center w-full flex-col justify-center gap-4 h-[95%] overflow-auto bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 pb-10'>
         <span className='flex flex-col items-center'>
           <h1 className='md:text-flg text-fmd font-bold text-center'>
             Convert Your Threads Post To Images
@@ -208,17 +202,27 @@ export default function Threads() {
         ) : (
           <>
             {/* Input - only show when authenticated */}
-        {contentState.contentLoading ? (
-          <span className='flex items-center justify-center w-4/5 max-w-[850px]'>
-            <PongSpinner
-              size={110}
-              color='#fff'
-              loading={contentState.contentLoading}
-            />
-          </span>
-        ) : (
-          // Display Content
-          !(contentState.postContent.length === 0) && <Preview />
+              {contentState.contentLoading ? (
+                <span className='flex items-center justify-center w-4/5 max-w-[850px]'>
+                  <PongSpinner
+                    size={110}
+                    color='#fff'
+                    loading={contentState.contentLoading}
+                  />
+                </span>
+              ) : (
+                <>
+                  {showAllPosts ? <AllPosts setId={setId} /> : <><Options /> <Preview setShowAllPosts={setShowAllPosts} /> </>}
+                </>
+              )}
+
+              {/* Error display */}
+              {contentState.error && (
+                <div className='bg-red-100 bg-opacity-20 backdrop-blur-sm border border-red-300 rounded-lg p-4 max-w-md text-center'>
+                  <p className='text-red-200 text-sm'>{contentState.error}</p>
+                </div>
+              )}
+            </>
         )}
       </main>
     </section>
